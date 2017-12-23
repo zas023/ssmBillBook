@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.copasso.billbook.dao.BBillMapper">
+  <resultMap id="BaseResultMap" type="com.copasso.billbook.bean.BBill">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="cost" jdbcType="REAL" property="cost" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="userId" jdbcType="INTEGER" property="userid" />
+    <result column="payId" jdbcType="INTEGER" property="payid" />
+    <result column="sortId" jdbcType="INTEGER" property="sortid" />
+    <result column="crDate" jdbcType="TIMESTAMP" property="crdate" />
+    <result column="income" jdbcType="BIT" property="income" />
+  </resultMap>
+  <resultMap id="WithSortResultMap" type="com.copasso.billbook.bean.BBill">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="cost" jdbcType="REAL" property="cost" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="userId" jdbcType="INTEGER" property="userid" />
+    <result column="payId" jdbcType="INTEGER" property="payid" />
+    <result column="sortId" jdbcType="INTEGER" property="sortid" />
+    <result column="crDate" jdbcType="TIMESTAMP" property="crdate" />
+    <result column="income" jdbcType="BIT" property="income" />
+    <!-- 指定联合查询出的部门字段的封装 -->
+    <association property="sort" javaType="com.copasso.billbook.bean.BSort">
+      <id column="sort_id" jdbcType="INTEGER" property="id" />
+      <result column="uid" jdbcType="INTEGER" property="uid" />
+      <result column="sort_name" jdbcType="VARCHAR" property="sortName" />
+      <result column="sort_img" jdbcType="VARCHAR" property="sortImg" />
+      <result column="priority" jdbcType="INTEGER" property="priority" />
+      <result column="sort_income" jdbcType="BIT" property="income" />
+    </association>
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, cost, content, userId, payId, sortId, crDate, income
+  </sql>
+  <!--设置s.id的别名，应为id字段重复-->
+  <sql id="WithSort_Column_List">
+    b.id, b.cost, b.content, b.userId, b.payId, b.sortId, b.crDate, b.income, s.id sort_id, s.uid, s.sort_name, s.sort_img, s.priority, s.income sort_income
+  </sql>
+  <select id="selectByExample" parameterType="com.copasso.billbook.bean.BBillExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from bb_bill
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from bb_bill
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from bb_bill
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.copasso.billbook.bean.BBillExample">
+    delete from bb_bill
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.copasso.billbook.bean.BBill"
+          useGeneratedKeys="true" keyProperty="id">
+    insert into bb_bill (id, cost, content, 
+      userId, payId, sortId, 
+      crDate, income)
+    values (#{id,jdbcType=INTEGER}, #{cost,jdbcType=REAL}, #{content,jdbcType=VARCHAR}, 
+      #{userid,jdbcType=INTEGER}, #{payid,jdbcType=INTEGER}, #{sortid,jdbcType=INTEGER}, 
+      #{crdate,jdbcType=TIMESTAMP}, #{income,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.copasso.billbook.bean.BBill"
+          useGeneratedKeys="true" keyProperty="id">
+    insert into bb_bill
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="cost != null">
+        cost,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="userid != null">
+        userId,
+      </if>
+      <if test="payid != null">
+        payId,
+      </if>
+      <if test="sortid != null">
+        sortId,
+      </if>
+      <if test="crdate != null">
+        crDate,
+      </if>
+      <if test="income != null">
+        income,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="cost != null">
+        #{cost,jdbcType=REAL},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="payid != null">
+        #{payid,jdbcType=INTEGER},
+      </if>
+      <if test="sortid != null">
+        #{sortid,jdbcType=INTEGER},
+      </if>
+      <if test="crdate != null">
+        #{crdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="income != null">
+        #{income,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.copasso.billbook.bean.BBillExample" resultType="java.lang.Long">
+    select count(*) from bb_bill
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <select id="selectByUserId" resultType="com.copasso.billbook.bean.BBill">
+    select
+    <include refid="Base_Column_List" />
+    from bb_bill
+    where userid = #{userid,jdbcType=INTEGER}
+  </select>
+  <select id="selectByUserIdWithMonth" resultType="com.copasso.billbook.bean.BBill">
+    select
+    <include refid="Base_Column_List" />
+    from bb_bill
+    where userid = #{userid,jdbcType=INTEGER} and date_format(crDate,'%Y-%m')=date_format(now(),'%Y-%m')
+  </select>
+  <select id="selectBillsByUserIdWithSortYMD" resultMap="WithSortResultMap">
+    select
+    <include refid="WithSort_Column_List" />
+    from bb_bill b
+    LEFT join bb_sort s on b.sortId = s.id
+    where b.userid = #{arg0,jdbcType=INTEGER} and date_format(b.crDate,'%Y-%m-%d')=#{arg1}
+    order by crDate desc
+  </select>
+  <select id="selectOutBillsByUserIdAndSortIdWithSortYM" resultMap="BaseResultMap">
+    select
+    <include refid="WithSort_Column_List" />
+    from bb_bill b
+    LEFT join bb_sort s on b.sortId = s.id
+    where b.userid = #{arg0,jdbcType=INTEGER} and b.sortid=#{arg1,jdbcType=INTEGER} and b.income=false and date_format(b.crDate,'%Y-%m')=#{arg2}
+    order by crDate desc
+  </select>
+  <select id="selectInBillsByUserIdAndSortIdWithSortYM" resultMap="BaseResultMap">
+    select
+    <include refid="WithSort_Column_List" />
+    from bb_bill b
+    LEFT join bb_sort s on b.sortId = s.id
+    where b.userid = #{arg0,jdbcType=INTEGER} and b.sortid=#{arg1,jdbcType=INTEGER} and b.income=true and date_format(b.crDate,'%Y-%m')=#{arg2}
+    order by crDate desc
+  </select>
+  <select id="selectBillsByUserIdYMD" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from bb_bill
+    where userid = #{arg0,jdbcType=INTEGER} and date_format(crDate,'%Y-%m-%d')=#{arg1}
+    order by crDate desc
+  </select>
+  <select id="getTotalIncomeByUserIdWithYearMonth" resultType="java.lang.String">
+    select
+    sum(cost)
+    from bb_bill
+    where userid = #{arg0} and date_format(crDate,'%Y-%m')=#{arg1} and income=true
+  </select>
+  <select id="getTotalOutcomeByUserIdWithYearMonth" resultType="java.lang.String">
+    select
+    sum(cost)
+    from bb_bill
+    where userid = #{arg0} and date_format(crDate,'%Y-%m')=#{arg1} and income=false
+  </select>
+  <select id="getTotalIncomeByUserIdWithSortIdYM" resultType="java.lang.String">
+    select
+    sum(cost)
+    from bb_bill
+    where userid = #{arg0} and sortid=#{arg1,jdbcType=INTEGER} and date_format(crDate,'%Y-%m')=#{arg2} and income=true
+  </select>
+  <select id="getTotalOutcomeByUserIdWithSortIdYM" resultType="java.lang.String">
+    select
+    sum(cost)
+    from bb_bill
+    where userid = #{arg0} and sortid=#{arg1,jdbcType=INTEGER} and date_format(crDate,'%Y-%m')=#{arg2} and income=false
+  </select>
+    <select id="getTotalIncomeByUserIdWithPayIdYM" resultType="java.lang.String">
+        select
+        sum(cost)
+        from bb_bill
+        where userid = #{arg0} and payid=#{arg1,jdbcType=INTEGER} and date_format(crDate,'%Y-%m')=#{arg2} and income=true
+    </select>
+    <select id="getTotalOutcomeByUserIdWithPayIdYM" resultType="java.lang.String">
+        select
+        sum(cost)
+        from bb_bill
+        where userid = #{arg0} and payid=#{arg1,jdbcType=INTEGER} and date_format(crDate,'%Y-%m')=#{arg2} and income=false
+    </select>
+  <select id="getTotalIncomeByUserIdWithYearMonthDay" resultType="java.lang.String">
+    select
+    sum(cost)
+    from bb_bill
+    where userid = #{arg0} and date_format(crDate,'%Y-%m-%d')=#{arg1} and income=true
+  </select>
+  <select id="getTotalOutcomeByUserIdWithYearMonthDay" resultType="java.lang.String">
+    select
+    sum(cost)
+    from bb_bill
+    where userid = #{arg0} and date_format(crDate,'%Y-%m-%d')=#{arg1} and income=false
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update bb_bill
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.cost != null">
+        cost = #{record.cost,jdbcType=REAL},
+      </if>
+      <if test="record.content != null">
+        content = #{record.content,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userid != null">
+        userId = #{record.userid,jdbcType=INTEGER},
+      </if>
+      <if test="record.payid != null">
+        payId = #{record.payid,jdbcType=INTEGER},
+      </if>
+      <if test="record.sortid != null">
+        sortId = #{record.sortid,jdbcType=INTEGER},
+      </if>
+      <if test="record.crdate != null">
+        crDate = #{record.crdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.income != null">
+        income = #{record.income,jdbcType=BIT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update bb_bill
+    set id = #{record.id,jdbcType=INTEGER},
+      cost = #{record.cost,jdbcType=REAL},
+      content = #{record.content,jdbcType=VARCHAR},
+      userId = #{record.userid,jdbcType=INTEGER},
+      payId = #{record.payid,jdbcType=INTEGER},
+      sortId = #{record.sortid,jdbcType=INTEGER},
+      crDate = #{record.crdate,jdbcType=TIMESTAMP},
+      income = #{record.income,jdbcType=BIT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.copasso.billbook.bean.BBill" >
+    update bb_bill
+    <set>
+      <if test="cost != null">
+        cost = #{cost,jdbcType=REAL},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null">
+        userId = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="payid != null">
+        payId = #{payid,jdbcType=INTEGER},
+      </if>
+      <if test="sortid != null">
+        sortId = #{sortid,jdbcType=INTEGER},
+      </if>
+      <if test="crdate != null">
+        crDate = #{crdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="income != null">
+        income = #{income,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.copasso.billbook.bean.BBill">
+    update bb_bill
+    set cost = #{cost,jdbcType=REAL},
+      content = #{content,jdbcType=VARCHAR},
+      userId = #{userid,jdbcType=INTEGER},
+      payId = #{payid,jdbcType=INTEGER},
+      sortId = #{sortid,jdbcType=INTEGER},
+      crDate = #{crdate,jdbcType=TIMESTAMP},
+      income = #{income,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
