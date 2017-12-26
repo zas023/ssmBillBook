@@ -4,6 +4,7 @@ import com.copasso.billbook.bean.BSort;
 import com.copasso.billbook.bean.NoteListBean;
 import com.copasso.billbook.service.BPayService;
 import com.copasso.billbook.service.BSortService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -48,4 +49,18 @@ public class BNoteController {
     public BSort sortinfo(@PathVariable("id") Integer id){
         return bSortService.findSortById(id);
     }
+
+
+    @RequestMapping("/sort/add")
+    @ResponseBody
+    public BSort addSort(@Param("uid") Integer uid,@Param("sortName") String sortName,
+                         @Param("sortImg") String sortImg,@Param("income") Boolean income){
+        BSort sort=new BSort(uid,sortName,sortImg,income);
+        int result=bSortService.addSort(sort);
+        if (result==0)
+            return null;
+        return sort;
+    }
+
+
 }

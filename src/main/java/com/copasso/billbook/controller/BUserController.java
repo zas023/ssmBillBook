@@ -50,8 +50,32 @@ public class BUserController {
      */
     @RequestMapping("sign")
     @ResponseBody
-    public BUser signup(@Param("username")String username,@Param("password")String password,@Param("mail")String mail){
+    public BUser signup(@Param("username")String username,@Param("password")String password,
+                        @Param("mail")String mail){
         return bUserService.register(new BUser(username,password,mail));
+    }
+
+    /**
+     * 更新用户信息
+     * @param id
+     * @param username
+     * @param gender
+     * @param phone
+     * @param mail
+     * @return
+     */
+    @RequestMapping("update")
+    @ResponseBody
+    public BUser updateUser(@Param("id")Integer id,@Param("username")String username,
+                            @Param("gender")String gender,@Param("phone")String phone,
+                            @Param("mail")String mail){
+        int result=bUserService.updateUser(new BUser(id,username,gender,phone,mail));
+        BUser user=bUserService.findUserById(id);
+        user.setSuccess();
+        if (result==0)
+            //result：影响行数，若为0即为失败
+            user.setFail();
+        return user;
     }
 
     /**

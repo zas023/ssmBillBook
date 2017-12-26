@@ -34,6 +34,14 @@ public class BUser extends BaseBean{
         this.mail = mail;
     }
 
+    public BUser(Integer id, String username, String gender, String phone, String mail) {
+        this.id = id;
+        this.username = username;
+        this.gender = gender;
+        this.phone = phone;
+        this.mail = mail;
+    }
+
     public Integer getId() {
         return id;
     }

@@ -50,7 +50,16 @@
 		<property name="dataSource" ref="comboPooledDataSource"></property>
 	</bean>
 
-	<!--开启基于注解的事务，使用XML配置形式的事务（推荐配置） -->
+    <!-- 定义文件解释器（文件上传） -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!-- 设置默认编码 -->
+        <property name="defaultEncoding" value="utf-8"></property>
+        <!-- 上传图片最大大小2M-->
+        <property name="maxUploadSize" value="2097152"></property>
+    </bean>
+
+
+    <!--开启基于注解的事务，使用XML配置形式的事务（推荐配置） -->
 	<aop:config>
 		<!--切入点表达式 -->
 		<aop:pointcut id="txPoint"

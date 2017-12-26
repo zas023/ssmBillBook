@@ -21,5 +21,7 @@
     <mvc:default-servlet-handler/>
     <!--处理一些spring的高级功能，如：JSR303，AJAX等-->
     <mvc:annotation-driven/>
+    <!-- 对静态资源文件的访问 -->
+    <mvc:resources location="/upload/" mapping="/upload/**"/>
 
 </beans>

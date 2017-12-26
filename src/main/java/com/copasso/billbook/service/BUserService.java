@@ -118,4 +118,13 @@ public class BUserService {
         bUserMapper.updateByPrimaryKey(user);
         return user;
     }
+
+    /**
+     * 更新用户信息
+     * @param user
+     * @return
+     */
+    public int updateUser(BUser user){
+        return bUserMapper.updateByPrimaryKeySelective(user);
+    }
 }
