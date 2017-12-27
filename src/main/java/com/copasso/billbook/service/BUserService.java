@@ -25,7 +25,7 @@ public class BUserService {
      * @return
      */
     public BUser register(BUser user){
-        BUser user2=findUserByUserName(user.getUsername());
+        BUser user2=bUserMapper.selectByUserName(user.getUsername());
         user.setSuccess();
         if(user2!=null){
             user.fail("用户名已经存在");
@@ -58,7 +58,7 @@ public class BUserService {
      */
     public BUser checkLogin(BUser user) {
 
-        BUser user2=findUserByUserName(user.getUsername());
+        BUser user2=bUserMapper.selectByUserName(user.getUsername());
 
         if (user2==null){
             user.fail("用户不存在");
