@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50719
 File Encoding         : 65001
 
-Date: 2017-11-10 18:22:26
+Date: 2017-12-25 19:33:06
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -18,109 +18,141 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 -- Table structure for bb_bill
 -- ----------------------------
-DROP TABLE IF EXISTS `bb_bill`;
+DROP TABLE IF EXISTS `bb_bill`;            #账单表
 CREATE TABLE `bb_bill` (
-  `id` int(8) NOT NULL AUTO_INCREMENT,
-  `cost` float(10,2) NOT NULL,
-  `content` varchar(255) DEFAULT NULL,
-  `userId` int(8) NOT NULL,
-  `typeId` int(8) NOT NULL,
-  `crDate` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `income` tinyint(1) NOT NULL DEFAULT '1',
+  `id` int(8) NOT NULL AUTO_INCREMENT,     #账单id
+  `cost` float(10,2) NOT NULL,             #账单金额
+  `content` varchar(255) DEFAULT NULL,     #账单备注
+  `userId` int(8) NOT NULL,                #账单创建者id
+  `payId` int(8) DEFAULT NULL,             #账单支付方式id
+  `sortId` int(8) NOT NULL,                #账单所属分类id
+  `crDate` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,  #账单创建时间
+  `income` tinyint(1) NOT NULL DEFAULT '1',  #账单类型，1（true）：支出，0（false）：收入
   PRIMARY KEY (`id`),
-  KEY `fk_bill_type` (`typeId`),
-  KEY `fk_bill_user` (`userId`),
-  CONSTRAINT `fk_bill_type` FOREIGN KEY (`typeId`) REFERENCES `bb_type` (`id`),
+  KEY `fk_bill_user` (`userId`),           #外键
+  KEY `fk_bill_sort` (`sortId`) USING BTREE,
+  KEY `fk_bill_pay` (`payId`),
+  CONSTRAINT `fk_bill_pay` FOREIGN KEY (`payId`) REFERENCES `bb_pay` (`id`),
+  CONSTRAINT `fk_bill_sort` FOREIGN KEY (`sortId`) REFERENCES `bb_sort` (`id`),
   CONSTRAINT `fk_bill_user` FOREIGN KEY (`userId`) REFERENCES `bb_user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=76 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of bb_bill
 -- ----------------------------
-INSERT INTO `bb_bill` VALUES ('1', '100.00', null, '1', '1', '2017-10-18 20:59:59', '1');
-INSERT INTO `bb_bill` VALUES ('2', '100.00', null, '1', '1', '2017-10-18 22:08:31', '1');
-INSERT INTO `bb_bill` VALUES ('3', '100.00', null, '1', '1', '2017-10-18 22:23:26', '0');
-INSERT INTO `bb_bill` VALUES ('4', '100.00', null, '1', '1', '2017-10-18 22:23:26', '0');
-INSERT INTO `bb_bill` VALUES ('5', '100.00', null, '1', '1', '2017-10-18 22:23:26', '0');
-INSERT INTO `bb_bill` VALUES ('6', '100.00', null, '1', '1', '2017-10-18 22:23:26', '0');
-INSERT INTO `bb_bill` VALUES ('7', '100.00', null, '1', '1', '2017-10-18 22:23:26', '0');
-INSERT INTO `bb_bill` VALUES ('8', '100.00', null, '1', '1', '2017-10-18 22:23:26', '0');
-INSERT INTO `bb_bill` VALUES ('9', '100.00', null, '1', '1', '2017-10-18 22:23:26', '0');
-INSERT INTO `bb_bill` VALUES ('10', '100.00', null, '1', '1', '2017-10-18 22:23:26', '0');
-INSERT INTO `bb_bill` VALUES ('11', '100.00', null, '1', '1', '2017-10-18 22:23:26', '0');
-INSERT INTO `bb_bill` VALUES ('12', '100.00', null, '1', '1', '2017-10-18 22:23:58', '0');
-INSERT INTO `bb_bill` VALUES ('13', '100.00', null, '1', '1', '2017-10-18 22:24:01', '0');
-INSERT INTO `bb_bill` VALUES ('14', '100.00', null, '1', '1', '2017-10-18 22:23:55', '0');
-INSERT INTO `bb_bill` VALUES ('15', '100.00', null, '1', '1', '2017-10-18 22:24:04', '0');
-INSERT INTO `bb_bill` VALUES ('16', '100.00', null, '1', '1', '2017-10-18 22:24:06', '0');
-INSERT INTO `bb_bill` VALUES ('17', '100.00', null, '1', '1', '2017-10-18 22:24:14', '0');
-INSERT INTO `bb_bill` VALUES ('18', '100.00', null, '1', '1', '2017-10-18 22:24:16', '0');
-INSERT INTO `bb_bill` VALUES ('19', '100.00', null, '1', '1', '2017-10-18 22:24:10', '0');
-INSERT INTO `bb_bill` VALUES ('20', '100.00', null, '1', '1', '2017-10-18 22:24:19', '0');
-INSERT INTO `bb_bill` VALUES ('21', '100.00', null, '1', '1', '2017-10-18 22:24:08', '0');
-INSERT INTO `bb_bill` VALUES ('22', '100.00', null, '1', '1', '2017-10-18 22:25:33', '0');
-INSERT INTO `bb_bill` VALUES ('23', '100.00', null, '1', '1', '2017-10-18 22:27:30', '1');
-INSERT INTO `bb_bill` VALUES ('24', '100.00', null, '7', '1', '2017-10-18 22:25:59', '0');
-INSERT INTO `bb_bill` VALUES ('25', '100.00', null, '7', '1', '2017-10-18 22:26:03', '0');
-INSERT INTO `bb_bill` VALUES ('26', '100.00', null, '1', '1', '2017-10-18 22:25:44', '0');
-INSERT INTO `bb_bill` VALUES ('27', '100.00', null, '1', '1', '2017-10-18 22:25:46', '0');
-INSERT INTO `bb_bill` VALUES ('28', '100.00', null, '8', '1', '2017-10-18 22:26:15', '0');
-INSERT INTO `bb_bill` VALUES ('29', '100.00', null, '1', '1', '2017-10-18 22:24:43', '0');
-INSERT INTO `bb_bill` VALUES ('30', '100.00', null, '1', '1', '2017-10-18 22:25:29', '0');
-INSERT INTO `bb_bill` VALUES ('31', '100.00', null, '1', '1', '2017-10-18 22:27:21', '1');
-INSERT INTO `bb_bill` VALUES ('32', '100.00', null, '8', '1', '2017-10-18 22:27:26', '1');
-INSERT INTO `bb_bill` VALUES ('33', '100.00', null, '1', '1', '2017-10-18 22:25:22', '0');
-INSERT INTO `bb_bill` VALUES ('34', '100.00', null, '1', '1', '2017-10-18 22:25:19', '0');
-INSERT INTO `bb_bill` VALUES ('35', '100.00', null, '1', '1', '2017-10-18 22:25:17', '0');
-INSERT INTO `bb_bill` VALUES ('36', '100.00', null, '8', '1', '2017-10-18 22:26:07', '0');
-INSERT INTO `bb_bill` VALUES ('37', '100.00', null, '1', '1', '2017-10-18 22:25:11', '0');
-INSERT INTO `bb_bill` VALUES ('38', '100.00', null, '1', '1', '2017-10-18 22:25:08', '0');
-INSERT INTO `bb_bill` VALUES ('39', '100.00', null, '1', '1', '2017-10-18 22:25:05', '0');
-INSERT INTO `bb_bill` VALUES ('40', '100.00', null, '1', '1', '2017-10-18 22:25:03', '0');
-INSERT INTO `bb_bill` VALUES ('41', '100.00', null, '1', '1', '2017-09-21 22:25:00', '0');
-INSERT INTO `bb_bill` VALUES ('42', '100.00', null, '1', '1', '2017-10-18 22:24:53', '0');
-INSERT INTO `bb_bill` VALUES ('43', '100.00', null, '1', '1', '2017-10-18 22:24:57', '0');
-INSERT INTO `bb_bill` VALUES ('44', '100.00', null, '7', '1', '2017-10-18 22:26:20', '0');
-INSERT INTO `bb_bill` VALUES ('45', '100.00', null, '1', '1', '2017-10-18 22:27:09', '1');
-INSERT INTO `bb_bill` VALUES ('46', '100.00', null, '1', '1', '2017-10-18 22:27:19', '1');
-INSERT INTO `bb_bill` VALUES ('47', '100.00', null, '1', '1', '2017-09-22 22:24:51', '0');
-INSERT INTO `bb_bill` VALUES ('48', '100.00', null, '1', '1', '2017-09-22 22:24:51', '0');
-INSERT INTO `bb_bill` VALUES ('49', '100.00', null, '1', '1', '2017-10-18 22:24:48', '0');
-INSERT INTO `bb_bill` VALUES ('50', '100.00', null, '7', '1', '2017-09-18 22:26:24', '0');
-INSERT INTO `bb_bill` VALUES ('51', '100.00', null, '7', '1', '2017-10-18 22:26:25', '0');
-INSERT INTO `bb_bill` VALUES ('52', '100.00', null, '1', '1', '2017-10-18 22:27:49', '1');
+INSERT INTO `bb_bill` VALUES ('2', '100.00', null, '1', '1', '39', '2017-12-06 20:58:27', '1');
+INSERT INTO `bb_bill` VALUES ('4', '100.00', null, '1', '1', '1', '2017-12-05 13:13:23', '0');
+INSERT INTO `bb_bill` VALUES ('5', '100.00', null, '1', '1', '2', '2017-12-06 20:48:08', '0');
+INSERT INTO `bb_bill` VALUES ('57', '50.00', 'null', '1', '1', '1', '2017-12-05 13:13:26', '0');
+INSERT INTO `bb_bill` VALUES ('58', '250.00', 'null', '1', '1', '3', '2017-12-06 20:48:12', '0');
+INSERT INTO `bb_bill` VALUES ('59', '200.00', 'null', '1', '1', '1', '2017-12-05 13:13:27', '0');
+INSERT INTO `bb_bill` VALUES ('71', '100.00', 'test', '1', '1', '41', '2017-12-06 20:58:38', '1');
+INSERT INTO `bb_bill` VALUES ('72', '100.00', 'test', '1', '1', '1', '2017-12-05 13:13:29', '0');
+INSERT INTO `bb_bill` VALUES ('73', '100.00', 'test', '1', '1', '1', '2017-12-05 13:13:32', '0');
+INSERT INTO `bb_bill` VALUES ('74', '100.00', 'test', '1', '5', '41', '2017-12-06 20:58:41', '1');
+INSERT INTO `bb_bill` VALUES ('75', '100.00', 'test', '1', '5', '40', '2017-12-06 20:58:45', '1');
 
 -- ----------------------------
--- Table structure for bb_type
+-- Table structure for bb_pay
 -- ----------------------------
-DROP TABLE IF EXISTS `bb_type`;
-CREATE TABLE `bb_type` (
-  `id` int(8) NOT NULL AUTO_INCREMENT,
-  `typename` varchar(11) NOT NULL,
+DROP TABLE IF EXISTS `bb_pay`;              #支付方式表
+CREATE TABLE `bb_pay` (
+  `id` int(8) NOT NULL AUTO_INCREMENT,      #支付方式id
+  `uid` int(8) DEFAULT NULL,                #所属用户id，0代表系统
+  `pay_name` varchar(32) DEFAULT NULL,      #支付方式名称
+  `pay_img` varchar(255) DEFAULT NULL,      #支付方式图标
+  `pay_num` varchar(32) DEFAULT NULL,       #支付方式备注
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of bb_type
+-- Records of bb_pay
 -- ----------------------------
-INSERT INTO `bb_type` VALUES ('1', '一般');
+INSERT INTO `bb_pay` VALUES ('1', '0', '现金', 'cash@2x.png', null);
+INSERT INTO `bb_pay` VALUES ('2', '0', '支付宝', 'account@2x.png', null);
+INSERT INTO `bb_pay` VALUES ('3', '0', '微信', 'account@2x.png', null);
+INSERT INTO `bb_pay` VALUES ('4', '1', '银行卡', 'bank@2x.png', '尾号5467');
+INSERT INTO `bb_pay` VALUES ('5', '1', '银行卡', 'bank@2x.png', '尾号4563');
+
+-- ----------------------------
+-- Table structure for bb_sort
+-- ----------------------------
+DROP TABLE IF EXISTS `bb_sort`;              #账单分类表
+CREATE TABLE `bb_sort` (
+  `id` int(8) NOT NULL AUTO_INCREMENT,       #账单分类id
+  `uid` int(8) unsigned zerofill DEFAULT NULL,  #所属用户id,0代表系统
+  `sort_name` varchar(255) DEFAULT NULL,     #账单分类名称
+  `sort_img` varchar(255) DEFAULT NULL,      #账单分类图标
+  `priority` int(3) DEFAULT NULL,            #账单分类优先级
+  `income` tinyint(1) NOT NULL,              #账单分类类型，1（true）：支出，0（false）：收入
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of bb_sort
+-- ----------------------------
+INSERT INTO `bb_sort` VALUES ('1', '00000000', '偿还费用', 'changhuanfeiyong@2x.png', '0', '0');
+INSERT INTO `bb_sort` VALUES ('2', '00000000', '手续费', 'shouxufei@2x.png', null, '0');
+INSERT INTO `bb_sort` VALUES ('3', '00000000', '商城消费', 'shangchengxiaofei@2x.png', null, '0');
+INSERT INTO `bb_sort` VALUES ('4', '00000000', '违约金', 'weiyuejin@2x.png', null, '0');
+INSERT INTO `bb_sort` VALUES ('5', '00000000', '住房', 'zhufang@2x.png', null, '0');
+INSERT INTO `bb_sort` VALUES ('6', '00000000', '办公', 'bangong@2x.png', null, '0');
+INSERT INTO `bb_sort` VALUES ('7', '00000000', '餐饮', 'canyin@2x.png', null, '0');
+INSERT INTO `bb_sort` VALUES ('8', '00000000', '医疗', 'yiliao@2x.png', null, '0');
+INSERT INTO `bb_sort` VALUES ('9', '00000010', '通讯', 'tongxun@2x.png', null, '0');
+INSERT INTO `bb_sort` VALUES ('10', '00000000', '运动', 'yundong@2x.png', null, '0');
+INSERT INTO `bb_sort` VALUES ('11', '00000000', '娱乐', 'yule@2x.png', null, '0');
+INSERT INTO `bb_sort` VALUES ('12', '00000000', '居家', 'jujia@2x.png', null, '0');
+INSERT INTO `bb_sort` VALUES ('13', '00000000', '宠物', 'chongwu@2x.png', null, '0');
+INSERT INTO `bb_sort` VALUES ('14', '00000000', '数码', 'shuma@2x.png', null, '0');
+INSERT INTO `bb_sort` VALUES ('15', '00000000', '捐赠', 'juanzeng@2x.png', null, '0');
+INSERT INTO `bb_sort` VALUES ('16', '00000000', '零食', 'lingshi@2x.png', null, '0');
+INSERT INTO `bb_sort` VALUES ('17', '00000000', '孩子', 'haizi@2x.png', null, '0');
+INSERT INTO `bb_sort` VALUES ('18', '00000000', '长辈', 'zhangbei@2x.png', null, '0');
+INSERT INTO `bb_sort` VALUES ('19', '00000000', '礼物', 'liwu@2x.png', null, '0');
+INSERT INTO `bb_sort` VALUES ('20', '00000000', '学习', 'xuexi@2x.png', null, '0');
+INSERT INTO `bb_sort` VALUES ('21', '00000000', '水果', 'shuiguo@2x.png', null, '0');
+INSERT INTO `bb_sort` VALUES ('22', '00000000', '美容', 'meirong@2x.png', null, '0');
+INSERT INTO `bb_sort` VALUES ('23', '00000000', '维修', 'weixiu@2x.png', null, '0');
+INSERT INTO `bb_sort` VALUES ('24', '00000000', '旅行', 'lvxing@2x.png', null, '0');
+INSERT INTO `bb_sort` VALUES ('25', '00000000', '交通', 'jiaotong@2x.png', null, '0');
+INSERT INTO `bb_sort` VALUES ('26', '00000000', '饮料', 'jiushuiyinliao@2x.png', null, '0');
+INSERT INTO `bb_sort` VALUES ('27', '00000000', '礼金', 'lijin@2x.png', null, '0');
+INSERT INTO `bb_sort` VALUES ('28', '00000001', '吃啊', 'tianjiade@2x.png', null, '0');
+INSERT INTO `bb_sort` VALUES ('29', '00000001', 'xxx', 'tianjiade@2x.png', null, '0');
+INSERT INTO `bb_sort` VALUES ('30', '00000001', '爱情', 'tianjiade@2x.png', null, '0');
+INSERT INTO `bb_sort` VALUES ('31', '00000001', '新年快乐', 'tianjiade@2x.png', null, '0');
+INSERT INTO `bb_sort` VALUES ('32', '00000001', '阿卡丽', 'tianjiade@2x.png', null, '0');
+INSERT INTO `bb_sort` VALUES ('33', '00000000', '添加', 'tianjia@2x.png', null, '0');
+INSERT INTO `bb_sort` VALUES ('34', '00000000', '礼金', 'lijin@2x.png', null, '1');
+INSERT INTO `bb_sort` VALUES ('35', '00000000', '加息', 'jiaxi@2x.png', null, '1');
+INSERT INTO `bb_sort` VALUES ('36', '00000000', '佣金奖励', 'yongjinjiangli@2x.png', null, '1');
+INSERT INTO `bb_sort` VALUES ('37', '00000000', '额外收益', 'ewaishouyi@2x.png', null, '1');
+INSERT INTO `bb_sort` VALUES ('38', '00000000', '资金补偿', 'zijinbuchang@2x.png', null, '1');
+INSERT INTO `bb_sort` VALUES ('39', '00000000', '利息', 'lixi@2x.png', null, '1');
+INSERT INTO `bb_sort` VALUES ('40', '00000000', '返现', 'fanxian@2x.png', null, '1');
+INSERT INTO `bb_sort` VALUES ('41', '00000000', '兼职', 'jianzhi@2x.png', null, '1');
+INSERT INTO `bb_sort` VALUES ('42', '00000001', '其他', 'tianjiade@2x.png', null, '1');
+INSERT INTO `bb_sort` VALUES ('43', '00000001', '添加3', 'tianjiade@2x.png', null, '1');
+INSERT INTO `bb_sort` VALUES ('44', '00000001', '吃饭', 'tianjiade@2x.png', null, '1');
+INSERT INTO `bb_sort` VALUES ('45', '00000000', '添加', 'tianjia@2x.png', null, '1');
 
 -- ----------------------------
 -- Table structure for bb_user
 -- ----------------------------
-DROP TABLE IF EXISTS `bb_user`;
+DROP TABLE IF EXISTS `bb_user`;                 #用户表
 CREATE TABLE `bb_user` (
-  `id` int(8) NOT NULL AUTO_INCREMENT,
-  `username` varchar(11) NOT NULL,
-  `password` varchar(32) NOT NULL,
-  `gender` char(1) DEFAULT NULL,
-  `phone` varchar(11) DEFAULT NULL,
-  `mail` varchar(32) DEFAULT NULL,
-  `state` int(1) unsigned zerofill DEFAULT '0',
-  `mailcode` varchar(64) DEFAULT NULL,
-  `phonecode` varchar(6) DEFAULT NULL,
+  `id` int(8) NOT NULL AUTO_INCREMENT,          #用户id
+  `username` varchar(11) NOT NULL,              #用户名称
+  `password` varchar(32) NOT NULL,              #用户密码（MD5加密）
+  `gender` char(1) DEFAULT NULL,                #用户性别，M:男，F:女
+  `phone` varchar(11) DEFAULT NULL,             #用户电话
+  `mail` varchar(32) DEFAULT NULL,              #用户邮箱
+  `state` int(1) unsigned zerofill DEFAULT '0', #账号状态，1：可用，0：不可用
+  `mailcode` varchar(64) DEFAULT NULL,          #邮箱验证码
+  `phonecode` varchar(6) DEFAULT NULL,          #电话验证码
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of bb_user
@@ -128,3 +160,6 @@ CREATE TABLE `bb_user` (
 INSERT INTO `bb_user` VALUES ('1', 'admin', '3E3E6B0E5C1C68644FC5CE3CF060211D', 'M', '15922646438', '375027533@qq.com', '0', null, null);
 INSERT INTO `bb_user` VALUES ('7', 'user02', 'C1898DE4A655382952DC4A93688E211D', null, null, '375027533@qq.com', '1', 'ecbd72af2fc24585926627ec71354684c11da4bacde64b9796568ecdd99e79bc', null);
 INSERT INTO `bb_user` VALUES ('8', 'user01', '338CCCC24975FA0F6FF93D2AFA80AFF7', null, null, '375027533@qq.com', '0', 'b77e29beb86c4eb0a5137cd227b86f985af1cdd2106d487588f188544050e91f', null);
+INSERT INTO `bb_user` VALUES ('9', 'admin1', '3E3E6B0E5C1C68644FC5CE3CF060211D', null, null, '375027533@qq.com', '1', '7153b931e95240338c3000cf7a3ce1035ba80eced47f47bfbdc1f61c0df40db5', null);
+INSERT INTO `bb_user` VALUES ('10', 'admin2', '3E3E6B0E5C1C68644FC5CE3CF060211D', null, null, '375027533@qq.com', '0', '639ebd7bf2164c67b4e6168ff3f7f3828a56ca0691194a02b7a5cff61e871ab3', null);
+INSERT INTO `bb_user` VALUES ('11', 'admin3', '3E3E6B0E5C1C68644FC5CE3CF060211D', null, null, '375027533@qq.com', '0', '6d77b7c476be479b890027af2d45a09f1ab6bee475f1419ca9c08e9fb8477fec', null);

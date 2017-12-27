@@ -2,9 +2,8 @@ package com.copasso.billbook.dao;
 
 import com.copasso.billbook.bean.BUser;
 import com.copasso.billbook.bean.BUserExample;
-import org.apache.ibatis.annotations.Param;
-
 import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 public interface BUserMapper {
     long countByExample(BUserExample example);

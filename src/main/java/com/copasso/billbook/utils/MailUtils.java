@@ -20,11 +20,12 @@ public class MailUtils {
     public static boolean send(String to, String subject, String msg) {
         Properties props = new Properties();
         // 邮件传输的协议
-        props.put("mail.transport.protocol", "smtp");
+        props.setProperty("mail.transport.protocol", "smtp");
         // 连接的邮件服务器
-        props.put("mail.host", "smtp.163.com");
+        props.setProperty("mail.host", "smtp.163.com");
+        props.setProperty("mail.smtp.auth", "true");
         // 发送人
-        props.put("mail.from", "18725912261@163.com");
+        //props.put("mail.from", "18725912261@163.com");
 
         // 第一步：创建Session
         Session session = Session.getDefaultInstance(props);
@@ -33,7 +34,7 @@ public class MailUtils {
             // 第二步：获取邮件传输对象
             Transport ts = session.getTransport();
             // 连接邮件服务器
-            ts.connect("18725912261@163.com", "zas19960607zyr");
+            ts.connect("smtp.163.com","18725912261@163.com", "zas19960607zyr");
             // 第三步: 创建邮件消息体
             MimeMessage message = new MimeMessage(session);
             // 设置邮件的主题

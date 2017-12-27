@@ -7,6 +7,8 @@ public class BUser extends BaseBean{
 
     private String password;
 
+    private String image;
+
     private String gender;
 
     private String phone;
@@ -19,8 +21,13 @@ public class BUser extends BaseBean{
 
     private String phonecode;
 
-    public BUser() {
+    public BUser(){
         super();
+    }
+
+    public BUser(Integer id, String image) {
+        this.id = id;
+        this.image = image;
     }
 
     public BUser(String username, String password) {
@@ -40,6 +47,23 @@ public class BUser extends BaseBean{
         this.gender = gender;
         this.phone = phone;
         this.mail = mail;
+    }
+
+    public BUser(Integer id, String username,
+                 String password, String image,
+                 String gender, String phone,
+                 String mail, Integer state,
+                 String mailcode, String phonecode) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.image = image;
+        this.gender = gender;
+        this.phone = phone;
+        this.mail = mail;
+        this.state = state;
+        this.mailcode = mailcode;
+        this.phonecode = phonecode;
     }
 
     public Integer getId() {
@@ -64,6 +88,14 @@ public class BUser extends BaseBean{
 
     public void setPassword(String password) {
         this.password = password == null ? null : password.trim();
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image == null ? null : image.trim();
     }
 
     public String getGender() {
