@@ -8,9 +8,7 @@
 /{uiserId}/{Year}/{Month}
 
 * uiserId : 用户id
-
 * Year : 年份
-
 * Month ： 月份
 
 *  **接口地址:**
@@ -32,9 +30,7 @@ __接口返回数据__
 /{uiserId}/{Year}/{Month}
 
 * uiserId : 用户id
-
 * Year : 年份
-
 * Month ： 月份
 
 **接口地址:**
@@ -54,9 +50,7 @@ __接口返回数据__
 /{uiserId}/{Year}/{Month}
 
 * uiserId : 用户id
-
 * Year : 年份
-
 * Month ： 月份
 
 **接口地址:**
@@ -68,4 +62,88 @@ __接口返回数据__
 __接口返回数据__
 ```javascript
 {"status":100,"message":"处理成功！","totalOut":"900.00","totalIn":"300.00","l_totalOut":"0.00","l_totalIn":"0.00","list":[{"bPay":{"id":1,"uid":0,"payName":"现金","payImg":"cash@2x.png","payNum":null},"outcome":"900.00","income":"200.00"},{"bPay":{"id":2,"uid":0,"payName":"支付宝","payImg":"account@2x.png","payNum":null},"outcome":"0.00","income":"0.00"},{"bPay":{"id":3,"uid":0,"payName":"微信","payImg":"account@2x.png","payNum":null},"outcome":"0.00","income":"0.00"},{"bPay":{"id":4,"uid":1,"payName":"银行卡","payImg":"bank@2x.png","payNum":"尾号5467"},"outcome":"0.00","income":"0.00"},{"bPay":{"id":5,"uid":1,"payName":"银行卡","payImg":"bank@2x.png","payNum":"尾号4563"},"outcome":"0.00","income":"100.00"}]}
+```
+#### 1.4  添加账单
+>返回新增账单
+
+**必选参数:**
+* uiserId : 用户id
+* sortid : 账单分类id
+* payid ： 用户支付方式id
+* cost ： 账单金额
+* crdate ： 创建时间
+* content ： 备注
+* income ： 是否为收入
+
+**接口地址:**
+`bill/add`
+
+**调用例子:**
+`http://139.199.176.173:8080/ssmBillBook/bill/add?userid=1&sortid=2&payid=3&cost=555.0&crdate=2017-12-27%2020:58:27&content=test&income=false`
+
+__接口返回数据__
+```javascript
+{}
+```
+
+#### 1.5  修改账单
+>返回更新的账单
+
+**必选参数:**
+* id ： 账单id
+* uiserId : 用户id
+* sortid : 账单分类id
+* payid ： 用户支付方式id
+* cost ： 账单金额
+* crdate ： 创建时间
+* content ： 备注
+* income ： 是否为收入
+
+**接口地址:**
+`bill/update`
+
+**调用例子:**
+`http://139.199.176.173:8080/ssmBillBook/bill/add?id=80&userid=1&sortid=2&payid=3&cost=555.0&crdate=2017-12-27%2020:58:27&content=test&income=false`
+
+__接口返回数据__
+```javascript
+{}
+```
+
+#### 1.6  删除账单
+>返回通用信息
+
+**必选参数:**
+/{id}
+
+* id ： 账单id
+
+**接口地址:**
+`bill/delete`
+
+**调用例子:**
+`http://139.199.176.173:8080/ssmBillBook/bill/delete/80`
+
+__接口返回数据__
+```javascript
+{"status":100,"message":"处理成功！"}
+```
+
+#### 1.7  查询账单
+>返回查询账单
+
+**必选参数:**
+/{id}
+
+* id ： 账单id
+
+**接口地址:**
+`bill/find`
+
+**调用例子:**
+`http://139.199.176.173:8080/ssmBillBook/bill/find/71`
+
+__接口返回数据__
+```javascript
+{"id":71,"cost":100.0,"content":"test","userid":1,"payid":1,"sortid":41,"crdate":1512565118000,"income":true,"sort":null}
 ```
