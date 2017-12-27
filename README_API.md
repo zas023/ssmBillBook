@@ -272,3 +272,26 @@ __接口返回数据__
 ```javascript
 ok
 ```
+
+### 4.分类接口
+>和账单分类以及支付信息相关操作
+
+#### 4.1  用户账单分类以及支付信息查询
+>返回账单分类以及支付信息数据
+>其中sort账单分类以及用户支付方式的uid(用户id)有两种：0代表系统设置，其余对应用户id
+
+**必选参数:**
+/{id}
+
+* id : 用户id
+
+**接口地址:**
+`note/user`
+
+**调用例子:**
+`http://139.199.176.173:8080/ssmBillBook/note/user/1`
+
+__接口返回数据__
+```javascript
+{"status":100,"message":"处理成功！","outSortlis":[{"id":1,"uid":0,"sortName":"偿还费用","sortImg":"changhuanfeiyong@2x.png","priority":0,"income":false},{"id":2,"uid":0,"sortName":"手续费","sortImg":"shouxufei@2x.png","priority":null,"income":false},{"id":3,"uid":0,"sortName":"商城消费","sortImg":"shangchengxiaofei@2x.png","priority":null,"income":false},{"id":4,"uid":0,"sortName":"违约金","sortImg":"weiyuejin@2x.png","priority":null,"income":false},{"id":5,"uid":0,"sortName":"住房","sortImg":"zhufang@2x.png","priority":null,"income":false},{"id":6,"uid":0,"sortName":"办公","sortImg":"bangong@2x.png","priority":null,"income":false},{"id":7,"uid":0,"sortName":"餐饮","sortImg":"canyin@2x.png","priority":null,"income":false},{"id":8,"uid":0,"sortName":"医疗","sortImg":"yiliao@2x.png","priority":null,"income":false},{"id":10,"uid":0,"sortName":"运动","sortImg":"yundong@2x.png","priority":null,"income":false},{"id":11,"uid":0,"sortName":"娱乐","sortImg":"yule@2x.png","priority":null,"income":false},{"id":12,"uid":0,"sortName":"居家","sortImg":"jujia@2x.png","priority":null,"income":false},{"id":13,"uid":0,"sortName":"宠物","sortImg":"chongwu@2x.png","priority":null,"income":false},{"id":14,"uid":0,"sortName":"数码","sortImg":"shuma@2x.png","priority":null,"income":false},{"id":15,"uid":0,"sortName":"捐赠","sortImg":"juanzeng@2x.png","priority":null,"income":false},{"id":16,"uid":0,"sortName":"零食","sortImg":"lingshi@2x.png","priority":null,"income":false},{"id":17,"uid":0,"sortName":"孩子","sortImg":"haizi@2x.png","priority":null,"income":false},{"id":18,"uid":0,"sortName":"长辈","sortImg":"zhangbei@2x.png","priority":null,"income":false},{"id":19,"uid":0,"sortName":"礼物","sortImg":"liwu@2x.png","priority":null,"income":false},{"id":20,"uid":0,"sortName":"学习","sortImg":"xuexi@2x.png","priority":null,"income":false},{"id":21,"uid":0,"sortName":"水果","sortImg":"shuiguo@2x.png","priority":null,"income":false},{"id":22,"uid":0,"sortName":"美容","sortImg":"meirong@2x.png","priority":null,"income":false},{"id":23,"uid":0,"sortName":"维修","sortImg":"weixiu@2x.png","priority":null,"income":false},{"id":24,"uid":0,"sortName":"旅行","sortImg":"lvxing@2x.png","priority":null,"income":false},{"id":25,"uid":0,"sortName":"交通","sortImg":"jiaotong@2x.png","priority":null,"income":false},{"id":26,"uid":0,"sortName":"饮料","sortImg":"jiushuiyinliao@2x.png","priority":null,"income":false},{"id":27,"uid":0,"sortName":"礼金","sortImg":"lijin@2x.png","priority":null,"income":false},{"id":28,"uid":1,"sortName":"吃啊","sortImg":"tianjiade@2x.png","priority":null,"income":false},{"id":29,"uid":1,"sortName":"xxx","sortImg":"tianjiade@2x.png","priority":null,"income":false},{"id":30,"uid":1,"sortName":"爱情","sortImg":"tianjiade@2x.png","priority":null,"income":false},{"id":31,"uid":1,"sortName":"新年快乐","sortImg":"tianjiade@2x.png","priority":null,"income":false},{"id":32,"uid":1,"sortName":"阿卡丽","sortImg":"tianjiade@2x.png","priority":null,"income":false},{"id":33,"uid":0,"sortName":"添加","sortImg":"tianjia@2x.png","priority":null,"income":false}],"inSortlis":[{"id":34,"uid":0,"sortName":"礼金","sortImg":"lijin@2x.png","priority":null,"income":true},{"id":35,"uid":0,"sortName":"加息","sortImg":"jiaxi@2x.png","priority":null,"income":true},{"id":36,"uid":0,"sortName":"佣金奖励","sortImg":"yongjinjiangli@2x.png","priority":null,"income":true},{"id":37,"uid":0,"sortName":"额外收益","sortImg":"ewaishouyi@2x.png","priority":null,"income":true},{"id":38,"uid":0,"sortName":"资金补偿","sortImg":"zijinbuchang@2x.png","priority":null,"income":true},{"id":39,"uid":0,"sortName":"利息","sortImg":"lixi@2x.png","priority":null,"income":true},{"id":40,"uid":0,"sortName":"返现","sortImg":"fanxian@2x.png","priority":null,"income":true},{"id":41,"uid":0,"sortName":"兼职","sortImg":"jianzhi@2x.png","priority":null,"income":true},{"id":42,"uid":1,"sortName":"其他","sortImg":"tianjiade@2x.png","priority":null,"income":true},{"id":43,"uid":1,"sortName":"添加3","sortImg":"tianjiade@2x.png","priority":null,"income":true},{"id":44,"uid":1,"sortName":"吃饭","sortImg":"tianjiade@2x.png","priority":null,"income":true},{"id":45,"uid":0,"sortName":"添加","sortImg":"tianjia@2x.png","priority":null,"income":true}],"payinfo":[{"id":1,"uid":0,"payName":"现金","payImg":"cash@2x.png","payNum":null},{"id":2,"uid":0,"payName":"支付宝","payImg":"account@2x.png","payNum":null},{"id":3,"uid":0,"payName":"微信","payImg":"account@2x.png","payNum":null},{"id":4,"uid":1,"payName":"银行卡","payImg":"bank@2x.png","payNum":"尾号5467"},{"id":5,"uid":1,"payName":"银行卡","payImg":"bank@2x.png","payNum":"尾号4563"}]}
+```
