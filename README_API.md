@@ -265,6 +265,9 @@ __接口返回数据__
 **测试地址:**
 `http://139.199.176.173:8080/ssmBillBook/file/test`
 
+**文件地址:**
+`http://139.199.176.173:8080/ssmBillBook/upload/1_1514361165324.png`
+
 __接口返回数据__
 ```javascript
 ok
