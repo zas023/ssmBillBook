@@ -226,3 +226,22 @@ __接口返回数据__
 ```javascript
 {"status":100,"message":"处理成功！","id":16,"username":"user","password":"2E1EF01B619313B6452C5C348F55CB26","image":null,"gender":"F","phone":"18725912261","mail":"375027533@qq.com","state":1,"mailcode":"c305953c88a34a80b4e582e6f35384ddbaa10badda674711989a1192583abec0","phonecode":null}
 ```
+
+#### 2.5 忘记密码后重置密码
+>返回用户信息
+
+**必选参数:**
+* username : 用户名
+* password ： 新密码
+* code : 邮箱中的验证码
+
+**接口地址:**
+`user/changePw`
+
+**调用例子:**
+`http://139.199.176.173:8080/ssmBillBook/user/changePw?username=user&&password=admin&code=123456`
+
+__接口返回数据__
+```javascript
+{"status":100,"message":"处理成功！","id":16,"username":"user","password":"2E1EF01B619313B6452C5C348F55CB26","image":null,"gender":"F","phone":"18725912261","mail":"375027533@qq.com","state":1,"mailcode":"c305953c88a34a80b4e582e6f35384ddbaa10badda674711989a1192583abec0","phonecode":null}
+```
