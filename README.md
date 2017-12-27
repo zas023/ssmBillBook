@@ -12,13 +12,13 @@ android前端地址：https://github.com/zas023/CocoBill
 **必选参数:**
 /{uiserId}/{Year}/{Month}
 
-uiserId : 用户id
+* uiserId : 用户id
 
-Year : 年份
+* Year : 年份
 
-Month ： 月份
+* Month ： 月份
 
-**接口地址:**
+*  **接口地址:**
 `bill/user`
 
 **调用例子:**
@@ -36,11 +36,11 @@ __接口返回数据__
 **必选参数:**
 /{uiserId}/{Year}/{Month}
 
-uiserId : 用户id
+* uiserId : 用户id
 
-Year : 年份
+* Year : 年份
 
-Month ： 月份
+* Month ： 月份
 
 **接口地址:**
 `bill/chart`
@@ -58,11 +58,11 @@ __接口返回数据__
 **必选参数:**
 /{uiserId}/{Year}/{Month}
 
-uiserId : 用户id
+* uiserId : 用户id
 
-Year : 年份
+* Year : 年份
 
-Month ： 月份
+* Month ： 月份
 
 **接口地址:**
 `bill/pay`
