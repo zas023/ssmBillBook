@@ -245,3 +245,27 @@ __接口返回数据__
 ```javascript
 {"status":100,"message":"处理成功！","id":16,"username":"user","password":"2E1EF01B619313B6452C5C348F55CB26","image":null,"gender":"F","phone":"18725912261","mail":"375027533@qq.com","state":1,"mailcode":"c305953c88a34a80b4e582e6f35384ddbaa10badda674711989a1192583abec0","phonecode":null}
 ```
+
+### 3.文件接口
+>和文件相关操作
+
+#### 3.1  上传头像
+>返回
+>方式 POST
+
+**必选参数:**
+* file : 用户头像文件
+
+**接口地址:**
+`file/upload`
+
+**调用例子:**
+`http://139.199.176.173:8080/ssmBillBook/file/upload`
+
+**测试地址:**
+`http://139.199.176.173:8080/ssmBillBook/file/test`
+
+__接口返回数据__
+```javascript
+ok
+```
