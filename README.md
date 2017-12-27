@@ -1,7 +1,7 @@
 # ssmBillBook
 程序设计——记账本之后端SSM框架
 
-android前端地址：https://github.com/zas023/CocoBill
+android前端项目地址：https://github.com/zas023/CocoBill
 
 ### 1.账单接口
 >和账单相关操作
