@@ -1,7 +1,6 @@
 package com.copasso.billbook.utils;
 
-import javax.mail.Session;
-import javax.mail.Transport;
+import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
@@ -12,49 +11,67 @@ import java.util.Properties;
 public class MailUtils {
 
     /**
-     * @param to      邮件接收着地址
+     * @param sendTo  邮件接收着地址
      * @param subject 邮件主题
      * @param msg     邮件正文
      * @return true发送成功|false发送失败
      */
-    public static boolean send(String to, String subject, String msg) {
-        Properties props = new Properties();
-        // 邮件传输的协议
-        props.setProperty("mail.transport.protocol", "smtp");
-        // 连接的邮件服务器
-        props.setProperty("mail.host", "smtp.163.com");
-        props.setProperty("mail.smtp.auth", "true");
-        // 发送人
-        //props.put("mail.from", "18725912261@163.com");
-
-        // 第一步：创建Session
-        Session session = Session.getDefaultInstance(props);
-        session.setDebug(true);
+    public static boolean send(String sendTo, String subject, String msg) {
         try {
-            // 第二步：获取邮件传输对象
-            Transport ts = session.getTransport();
-            // 连接邮件服务器
-            ts.connect("smtp.163.com","18725912261@163.com", "zas19960607zyr");
-            // 第三步: 创建邮件消息体
+            String host = "smtp.163.com";//这是163邮箱的smtp服务器地址
+            String port = "465"; //端口号
+            /*
+             *Properties是一个属性对象，用来创建Session对象
+             */
+            Properties props = new Properties();
+            props.setProperty("mail.smtp.host", host);
+            props.setProperty("mail.smtp.port", port);
+            props.setProperty("mail.smtp.auth", "true");
+            props.setProperty("mail.smtp.ssl.enable", "true");//"true"
+            props.setProperty("mail.smtp.connectiontimeout", "5000");
+            final String user = "18725912261@163.com";//用户名
+            final String pwd = "zas19960607zyr";//密码
+            /*
+             *Session类定义了一个基本的邮件对话。
+             */
+            Session session = Session.getInstance(props, new Authenticator() {
+                @Override
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    //登录用户名密码
+                    return new PasswordAuthentication(user,pwd);
+                }
+            });
+            session.setDebug(true);
+            /*
+             *Transport类用来发送邮件。
+             *传入参数smtp，transport将自动按照smtp协议发送邮件。
+             */
+            Transport transport = session.getTransport("smtp");//"smtps"
+            transport.connect(host,user,pwd);
+            /*
+             *Message对象用来储存实际发送的电子邮件信息
+             */
             MimeMessage message = new MimeMessage(session);
-            // 设置邮件的主题
             message.setSubject(subject);
-            // 设置邮件的内容
-            message.setContent(msg, "text/html;charset=utf-8");
-            // 第四步：设置发送昵称
-            String nick = "";
-            try {
-                nick = javax.mail.internet.MimeUtility.encodeText("Mr.x");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            //设置发件人地址
-            message.setFrom(new InternetAddress(nick + " <18725912261@163.com>"));
-            // 第五步：设置接收人信息
-            ts.sendMessage(message, InternetAddress.parse(to));
-            return true;
-        } catch (Exception ex) {
-            ex.printStackTrace();
+            //消息发送者接收者设置(发件地址，昵称)，收件人看到的昵称是这里设定的
+            message.setFrom(new InternetAddress(user,"CocoBill"));
+            message.addRecipients(Message.RecipientType.TO,new InternetAddress[]{
+                    //消息接收者(收件地址，昵称)
+                    //不过这个昵称貌似没有看到效果
+                    new InternetAddress(sendTo,"Mr.x"),
+            });
+            message.saveChanges();
+
+            //设置邮件内容及编码格式
+            //后一个参数可以不指定编码，如"text/plain"，但是将不能显示中文字符
+            message.setContent(msg, "text/plain;charset=UTF-8");
+            //发送
+            //transport.send(message);
+            Transport.send(message);
+            transport.close();
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
         return false;
     }

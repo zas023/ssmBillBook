@@ -1,54 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
-	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 
-	<!--spring的配置文件,数据源，事务控制等 -->
-	<!--出现的问题是必须加下边的扫描，否则service包下的不能被当做bean -->
-	<context:component-scan base-package="com.copasso">
-		<context:exclude-filter type="annotation"
-			expression="org.springframework.stereotype.Controller" />
-	</context:component-scan>
+    <!--spring的配置文件,数据源，事务控制等 -->
+    <!--出现的问题是必须加下边的扫描，否则service包下的不能被当做bean -->
+    <context:component-scan base-package="com.copasso">
+        <context:exclude-filter type="annotation"
+                                expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
 
-	<context:property-placeholder location="classpath:dbconfig.properties" />
-	<!--配置数据源 -->
-	<bean id="comboPooledDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
-		<property name="jdbcUrl" value="${jdbc.jdbcUrl}"></property>
-		<property name="driverClass" value="${jdbc.driverClass}"></property>
-		<property name="user" value="${jdbc.user}"></property>
-		<property name="password" value="${jdbc.password}"></property>
-	</bean>
+    <context:property-placeholder location="classpath:dbconfig.properties"/>
+    <!--配置数据源 -->
+    <bean id="comboPooledDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="jdbcUrl" value="${jdbc.jdbcUrl}"></property>
+        <property name="driverClass" value="${jdbc.driverClass}"></property>
+        <property name="user" value="${jdbc.user}"></property>
+        <property name="password" value="${jdbc.password}"></property>
+    </bean>
 
-	<!--配置和Mybatis的整合 -->
-	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-		<!--指定Mybatis全局配置文件 -->
-		<property name="configLocation" value="classpath:mybatis-config.xml"></property>
-		<property name="dataSource" ref="comboPooledDataSource"></property>
-		<property name="mapperLocations" value="classpath:mapper/*.xml"></property>
-	</bean>
+    <!--配置和Mybatis的整合 -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!--指定Mybatis全局配置文件 -->
+        <property name="configLocation" value="classpath:mybatis-config.xml"></property>
+        <property name="dataSource" ref="comboPooledDataSource"></property>
+        <property name="mapperLocations" value="classpath:mapper/*.xml"></property>
+    </bean>
 
-	<!--配置扫描器 -->
-	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<!--扫描所有dao接口的实现，加入到IOC容器中 -->
-		<property name="basePackage" value="com.copasso.billbook.dao"></property>
-	</bean>
+    <!--配置扫描器 -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!--扫描所有dao接口的实现，加入到IOC容器中 -->
+        <property name="basePackage" value="com.copasso.billbook.dao"></property>
+    </bean>
 
-	<!--执行批量的SQLSession -->
-	<bean id="sqlsession" class="org.mybatis.spring.SqlSessionTemplate">
-		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"></constructor-arg>
-		<constructor-arg name="executorType" value="BATCH"></constructor-arg>
-	</bean>
+    <!--执行批量的SQLSession -->
+    <bean id="sqlsession" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"></constructor-arg>
+        <constructor-arg name="executorType" value="BATCH"></constructor-arg>
+    </bean>
 
-	<!--事务控制的配置 -->
-	<bean id="transactionManager"
-		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<!--控制住数据源 -->
-		<property name="dataSource" ref="comboPooledDataSource"></property>
-	</bean>
+    <!--事务控制的配置 -->
+    <bean id="transactionManager"
+          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <!--控制住数据源 -->
+        <property name="dataSource" ref="comboPooledDataSource"></property>
+    </bean>
 
     <!-- 定义文件解释器（文件上传） -->
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
@@ -60,23 +61,23 @@
 
 
     <!--开启基于注解的事务，使用XML配置形式的事务（推荐配置） -->
-	<aop:config>
-		<!--切入点表达式 -->
-		<aop:pointcut id="txPoint"
-			expression="execution(* com.copasso.billbook.service.*.*(..))"></aop:pointcut>
-		<!--配置事务增强 -->
-		<aop:advisor advice-ref="txAdvice" pointcut-ref="txPoint"></aop:advisor>
-	</aop:config>
+    <aop:config>
+        <!--切入点表达式 -->
+        <aop:pointcut id="txPoint"
+                      expression="execution(* com.copasso.billbook.service.*.*(..))"></aop:pointcut>
+        <!--配置事务增强 -->
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="txPoint"></aop:advisor>
+    </aop:config>
 
-	<!--配置事务增强，事务如何切入 -->
-	<tx:advice id="txAdvice">
-		<tx:attributes>
-			<tx:method name="*" propagation="REQUIRED"/>
-			<!--以get开始的所有方法 -->
-			<tx:method name="get*" read-only="true" />
-			<tx:method name="select*" read-only="true" />
-		</tx:attributes>
-	</tx:advice>
+    <!--配置事务增强，事务如何切入 -->
+    <tx:advice id="txAdvice">
+        <tx:attributes>
+            <tx:method name="*" propagation="REQUIRED"/>
+            <!--以get开始的所有方法 -->
+            <tx:method name="get*" read-only="true"/>
+            <tx:method name="select*" read-only="true"/>
+        </tx:attributes>
+    </tx:advice>
 
-	<!--spring配置的核心点：数据源，和mybatis的整合 -->
+    <!--spring配置的核心点：数据源，和mybatis的整合 -->
 </beans>

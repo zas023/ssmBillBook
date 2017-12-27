@@ -3,12 +3,16 @@ package com.copasso.billbook.controller;
 import com.copasso.billbook.bean.BMessage;
 import com.copasso.billbook.bean.BUser;
 import com.copasso.billbook.service.BUserService;
+import com.copasso.billbook.utils.MDUtils;
+import com.copasso.billbook.utils.MailUtils;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.security.NoSuchAlgorithmException;
 
 /**
  * 用户User控制类
@@ -75,6 +79,78 @@ public class BUserController {
         if (result==0)
             //result：影响行数，若为0即为失败
             user.setFail();
+        return user;
+    }
+
+    /**
+     * 忘记密码
+     * @param username
+     * @param mail
+     * @return
+     */
+
+    @RequestMapping("forgetPw")
+    @ResponseBody
+    public BUser forgetPw(@Param("username")String username,@Param("mail")String mail){
+        BUser user=bUserService.findUserByUserName(username);
+
+        //用户名不存在
+        if (user==null){
+            user=new BUser();
+            user.fail("用户名不存在");
+            return user;
+        }
+        //清除密码
+        //user.setPassword(null);
+        //验证邮箱是否匹配
+        if (user.getMail().equals(mail)){
+            //随机产生6位验证码
+            String code= String.valueOf((Math.random()*9+1)*100000);
+            user.setMailcode(code);
+            //更新数据
+            bUserService.updateUser(user);
+            MailUtils.send(user.getMail(),"CocoBill",
+                    "您正在通过注册邮箱修改密码（如非本人操作，请忽略此次操作），验证码是："+code);
+            user.setSuccess();
+        }else{
+            user.fail("用户名与注册邮箱不匹配");
+        }
+        return user;
+    }
+
+    /**
+     * 修改密码
+     * @param username
+     * @param password
+     * @param code
+     * @return
+     */
+    @RequestMapping("changePw")
+    @ResponseBody
+    public BUser changePw(@Param("username")String username,
+                          @Param("password")String password,@Param("code")String code){
+        BUser user=bUserService.findUserByUserName(username);
+        //用户名不存在
+        if (user==null){
+            user=new BUser();
+            user.fail("用户名不存在");
+            return user;
+        }
+        //清除密码
+        //user.setPassword(null);
+        //验证邮箱是否匹配
+        if (user.getMailcode().equals(code)){
+            try {
+                user.setPassword(MDUtils.encodeMD2ToStr(password));
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
+            //更新数据
+            bUserService.updateUser(user);
+            user.setSuccess();
+        }else{
+            user.fail("验证码不正确");
+        }
         return user;
     }
 

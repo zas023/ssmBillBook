@@ -106,11 +106,11 @@
         select
         <include refid="Base_Column_List"/>
         from bb_user
-        where username = #{username,jdbcType=VARCHAR}
+        where mailcode = #{mailcode,jdbcType=VARCHAR}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from bb_user
-    where mailcode = #{mailcode,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </delete>
     <delete id="deleteByExample" parameterType="com.copasso.billbook.bean.BUserExample">
         delete from bb_user

@@ -41,9 +41,8 @@ public class BUserService {
             code = code.replaceAll("-", "");
             user2.setMailcode(code);
             //向注册邮箱发送验证文件
-            MailUtils.send(user2.getMail(), "Coco记账系统",
-                    "恭喜注册成功，请激活！http://139.199.176.173:8080/ssmBillBook/user/mail/verify?code="+code+
-                            "<a href='139.199.176.173:8080/ssmBillBook/user/mail/verify?code=\" "+ code + "\"'>激活帐号</a>");
+            MailUtils.send(user2.getMail(), "CocoBill",
+                    "恭喜注册成功，请点击链接激活！http://139.199.176.173:8080/ssmBillBook/user/mail/verify?code="+code);
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
@@ -97,8 +96,11 @@ public class BUserService {
      */
     public BUser findUserByUserName(String name){
         BUser user=bUserMapper.selectByUserName(name);
-        if (user==null)
-            return null;
+        if (user==null){
+            user=new BUser();
+            user.fail("用户名不存在");
+            return user;
+        }
         return user;
     }
 
