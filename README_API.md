@@ -147,3 +147,82 @@ __接口返回数据__
 ```javascript
 {"id":71,"cost":100.0,"content":"test","userid":1,"payid":1,"sortid":41,"crdate":1512565118000,"income":true,"sort":null}
 ```
+
+### 2.用户接口
+>和用户相关操作
+
+#### 2.1  用户登陆
+>返回用户信息
+
+**必选参数:**
+* username : 用户名
+* password : 用户密码
+
+*  **接口地址:**
+`user/login`
+
+**调用例子:**
+`http://139.199.176.173:8080/ssmBillBook/user/login?username=admin&password=admin`
+
+__接口返回数据__
+```javascript
+{"status":100,"message":"处理成功！","id":1,"username":"admin","password":"3E3E6B0E5C1C68644FC5CE3CF060211D","image":"1_1514361165324.png","gender":"M","phone":"15922646438","mail":"375027533@qq.com","state":1,"mailcode":"c305953c88a34a80b4e582e6f35384ddbaa10badda674711989a1192583abec0","phonecode":null}
+```
+
+#### 2.2  用户注册
+>返回用户注册信息，但须登陆注册邮箱激活
+
+**必选参数:**
+* username : 用户名
+* password : 用户密码
+* mail : 用户注册邮箱
+
+*  **接口地址:**
+`user/sign`
+
+**调用例子:**
+`http://139.199.176.173:8080/ssmBillBook/user/sign?username=admin&password=admin&mail=375027533@qq.com`
+
+__接口返回数据__
+```javascript
+{"status":200,"message":"用户名已经存在","id":null,"username":"admin","password":"admin","image":null,"gender":null,"phone":null,"mail":"375027533@qq.com","state":null,"mailcode":null,"phonecode":null}
+```
+
+#### 2.3  修改用户信息
+>返回更新后的用户信息
+
+**必选参数:**
+* id : 用户id
+* username : 用户名
+* gender : 用户性别（M :男，F :女）
+* phone : 用户电话
+* mail : 用户邮箱
+
+*  **接口地址:**
+`user/update`
+
+**调用例子:**
+`http://139.199.176.173:8080/ssmBillBook/user/update?id=16&username=user&gender=F&phone=18725912261&mail=375027533@qq.com`
+
+__接口返回数据__
+```javascript
+{"status":100,"message":"处理成功！","id":16,"username":"user","password":"2E1EF01B619313B6452C5C348F55CB26","image":null,"gender":"F","phone":"18725912261","mail":"375027533@qq.com","state":1,"mailcode":"c305953c88a34a80b4e582e6f35384ddbaa10badda674711989a1192583abec0","phonecode":null}
+```
+
+#### 2.4  忘记密码
+>返回通用信息
+
+**必选参数:**
+* username : 用户名
+* mail : 用户邮箱
+
+*  **接口地址:**
+`user/forgetPw`
+
+**调用例子:**
+`http://139.199.176.173:8080/ssmBillBook/user/forgetPw?username=user&mail=375027533@qq.com`
+
+__接口返回数据__
+```javascript
+{"status":100,"message":"处理成功！","id":16,"username":"user","password":"2E1EF01B619313B6452C5C348F55CB26","image":null,"gender":"F","phone":"18725912261","mail":"375027533@qq.com","state":1,"mailcode":"c305953c88a34a80b4e582e6f35384ddbaa10badda674711989a1192583abec0","phonecode":null}
+```
