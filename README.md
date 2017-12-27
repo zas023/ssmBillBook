@@ -18,7 +18,7 @@ android前端地址：https://github.com/zas023/CocoBill
 
 * Month ： 月份
 
-*  **接口地址:**
+**接口地址:**
 `bill/user`
 
 **调用例子:**
