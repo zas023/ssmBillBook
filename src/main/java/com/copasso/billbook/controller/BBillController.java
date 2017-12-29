@@ -50,7 +50,7 @@ public class BBillController {
 
         BBill bBill = new BBill(cost, content, userid, sortid, payid, DateUtils.strToDate(crdate), income);
         int result = bBillService.insertBill(bBill);
-        if (result != 0)
+        if (result == 0)
             return null;
         return bBill;
     }
@@ -77,7 +77,7 @@ public class BBillController {
         BBill bBill = new BBill(cost, content, userid, sortid, payid, DateUtils.strToDate(crdate), income);
         bBill.setId(id);
         int result = bBillService.updateBill(bBill);
-        if (result != 0)
+        if (result == 0)
             return null;
         return bBill;
     }

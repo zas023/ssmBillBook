@@ -230,14 +230,14 @@
     from bb_bill b
     LEFT join bb_sort s on b.sortId = s.id
     where b.userid = #{arg0,jdbcType=INTEGER} and b.sortid=#{arg1,jdbcType=INTEGER} and b.income=true and date_format(b.crDate,'%Y-%m')=#{arg2}
-    order by crDate desc
+    order by cost desc
   </select>
   <select id="selectBillsByUserIdYMD" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from bb_bill
     where userid = #{arg0,jdbcType=INTEGER} and date_format(crDate,'%Y-%m-%d')=#{arg1}
-    order by crDate desc
+    order by cost desc
   </select>
   <select id="getTotalIncomeByUserIdWithYearMonth" resultType="java.lang.String">
     select

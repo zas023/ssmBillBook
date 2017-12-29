@@ -32,6 +32,8 @@ public class BSort {
         this.income = income;
     }
 
+
+
     public Integer getId() {
         return id;
     }

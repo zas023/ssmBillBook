@@ -15,6 +15,13 @@ public class BPay {
         super();
     }
 
+    public BPay( Integer uid, String payName, String payImg, String payNum) {
+        this.uid = uid;
+        this.payName = payName;
+        this.payImg = payImg;
+        this.payNum = payNum;
+    }
+
     public BPay(Integer id, Integer uid, String payName, String payImg, String payNum) {
         this.id = id;
         this.uid = uid;
