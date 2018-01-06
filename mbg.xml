@@ -43,6 +43,7 @@
 		<!-- 指定每个表的生成策略 -->
 		<!--<table tableName="bb_bill" domainObjectName="BBill"></table>-->
 		<!--<table tableName="bb_type" domainObjectName="BType"></table>-->
+		
 		<table tableName="bb_user" domainObjectName="BUser"></table>
 
 	</context>
