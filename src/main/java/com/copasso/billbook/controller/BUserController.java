@@ -129,6 +129,19 @@ public class BUserController {
     @ResponseBody
     public BUser changePw(@Param("username")String username,
                           @Param("password")String password,@Param("code")String code){
+        //修改密码，不需要验证码
+        if (code=="000000"){
+            BUser user=bUserService.findUserByUserName(username);
+            try {
+                user.setPassword(MDUtils.encodeMD5ToStr(password));
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
+            bUserService.updateUser(user);
+            user.setSuccess();
+            return user;
+        }
+        //忘记密码，需要验证码
         BUser user=bUserService.findUserByUserName(username);
         //用户名不存在
         if (user==null){
