@@ -19,6 +19,7 @@ public class MailUtils {
     public static boolean send(String sendTo, String subject, String msg) {
         try {
             String host = "smtp.163.com";//这是163邮箱的smtp服务器地址
+//            String host = "220.181.12.14";//这是163邮箱的smtp服务器地址
             String port = "465"; //端口号
             /*
              *Properties是一个属性对象，用来创建Session对象

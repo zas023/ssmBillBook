@@ -99,6 +99,17 @@ public class BNoteController {
      * @param id
      * @return
      */
+    @RequestMapping("/pay/delete/{id}")
+    @ResponseBody
+    public List<BPay> deletePay(@PathVariable("id") Integer id){
+        return bPayService.findPayinfoByUserId(id);
+    }
+
+    /**
+     * 通过payid查询分类信息
+     * @param id
+     * @return
+     */
     @RequestMapping("/pay/{id}")
     @ResponseBody
     public List<BPay> payinfo(@PathVariable("id") Integer id){

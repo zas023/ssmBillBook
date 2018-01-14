@@ -105,11 +105,11 @@ public class BUserController {
         //验证邮箱是否匹配
         if (user.getMail().equals(mail)){
             //随机产生6位验证码
-            String code= String.valueOf((Math.random()*9+1)*100000);
+            String code= String.valueOf((int)(Math.random()*9+1)*100000);
             user.setMailcode(code);
             //更新数据
             bUserService.updateUser(user);
-            MailUtils.send(user.getMail(),"CocoBill",
+            MailUtils.send(user.getMail(),"CocoBill记账系统",
                     "您正在通过注册邮箱修改密码（如非本人操作，请忽略此次操作），验证码是："+code);
             user.setSuccess();
         }else{
@@ -161,8 +161,11 @@ public class BUserController {
      */
     @RequestMapping("mail/verify")
     @ResponseBody
-    public BUser verifyMail(@Param("code")String code){
-        return bUserService.verifyMail(code);
+    public String  verifyMail(@Param("code")String code){
+        BUser user= bUserService.verifyMail(code);
+        if (user.getStatus()==100)
+            return user.getMessage();
+        return "邮箱验证成功，请返回登陆";
     }
 
     /**
