@@ -105,7 +105,7 @@ public class BUserController {
         //验证邮箱是否匹配
         if (user.getMail().equals(mail)){
             //随机产生6位验证码
-            String code= String.valueOf((int)(Math.random()*9+1)*100000);
+            String code= String.valueOf((int)((Math.random()*9+1)*100000));
             user.setMailcode(code);
             //更新数据
             bUserService.updateUser(user);
