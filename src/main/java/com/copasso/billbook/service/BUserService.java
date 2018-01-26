@@ -28,7 +28,7 @@ public class BUserService {
         BUser user2=bUserMapper.selectByUserName(user.getUsername());
         user.setSuccess();
         if(user2!=null){
-            user.fail("用户名已经存在");
+            user.setFail("用户名已经存在");
             return user;
         }
         user2=user;
@@ -61,7 +61,7 @@ public class BUserService {
         BUser user2=bUserMapper.selectByUserName(user.getUsername());
 
         if (user2==null){
-            user.fail("用户不存在");
+            user.setFail("用户不存在");
             return user;
         }else{
             try {
@@ -69,14 +69,14 @@ public class BUserService {
                     user2.setSuccess();
                     return user2;
                 }else{
-                    user.fail("密码错误");
+                    user.setFail("密码错误");
                     return user;
                 }
             } catch (NoSuchAlgorithmException e) {
                 e.printStackTrace();
             }
         }
-        user.fail("未知错误");
+        user.setFail("未知错误");
         return user;
     }
 
@@ -98,7 +98,7 @@ public class BUserService {
         BUser user=bUserMapper.selectByUserName(name);
         if (user==null){
             user=new BUser();
-            user.fail("用户名不存在");
+            user.setFail("用户名不存在");
             return user;
         }
         return user;
@@ -113,7 +113,7 @@ public class BUserService {
         BUser user=bUserMapper.selectByMailCode(code);
         user.setSuccess();
         if(user==null){
-            user.fail("验证链接已失效");
+            user.setFail("验证链接已失效");
             return user;
         }
         user.setState(1);

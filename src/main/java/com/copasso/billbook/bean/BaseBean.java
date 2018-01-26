@@ -1,15 +1,15 @@
 package com.copasso.billbook.bean;
-import java.io.Serializable;
 
-public class BaseBean implements Serializable {
+public class BaseBean {
 
-    private static final long serialVersionUID = 1L;
     /**
      * status : 100
      * message : 处理成功！
      */
 
+    //状态码   100-成功    200-失败
     private int status;
+    //提示信息
     private String message;
 
     public int getStatus() {
@@ -37,12 +37,24 @@ public class BaseBean implements Serializable {
         message="处理失败！";
     }
 
-    public void success(String msg){
-        status=100;
-        message=msg;
-    }
-    public void fail(String msg){
+    public void setFail(String msg){
         status=200;
         message=msg;
     }
+
+    public BaseBean success(){
+        setSuccess();
+        return this;
+    }
+
+    public BaseBean fail(){
+        setFail();
+        return this;
+    }
+
+    public BaseBean fail(String msg){
+        setFail(msg);
+        return this;
+    }
+
 }

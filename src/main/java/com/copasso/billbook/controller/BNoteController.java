@@ -1,8 +1,6 @@
 package com.copasso.billbook.controller;
 
-import com.copasso.billbook.bean.BPay;
-import com.copasso.billbook.bean.BSort;
-import com.copasso.billbook.bean.NoteListBean;
+import com.copasso.billbook.bean.*;
 import com.copasso.billbook.service.BPayService;
 import com.copasso.billbook.service.BSortService;
 import org.apache.ibatis.annotations.Param;
@@ -64,13 +62,13 @@ public class BNoteController {
      */
     @RequestMapping("/sort/add")
     @ResponseBody
-    public BSort addSort(@Param("uid") Integer uid,@Param("sortName") String sortName,
-                         @Param("sortImg") String sortImg,@Param("income") Boolean income){
+    public BSort2 addSort(@Param("uid") Integer uid, @Param("sortName") String sortName,
+                          @Param("sortImg") String sortImg, @Param("income") Boolean income){
         BSort sort=new BSort(uid,sortName,sortImg,income);
         int result=bSortService.addSort(sort);
         if (result==0)
-            return null;
-        return sort;
+            return (BSort2) new BSort2().fail();
+        return (BSort2) new BSort2(sort).success();
     }
 
     /**
@@ -84,14 +82,13 @@ public class BNoteController {
      */
     @RequestMapping("/sort/update")
     @ResponseBody
-    public BSort updateSort(@Param("id") Integer id,@Param("uid") Integer uid,@Param("sortName") String sortName,
+    public BSort2 updateSort(@Param("id") Integer id,@Param("uid") Integer uid,@Param("sortName") String sortName,
                          @Param("sortImg") String sortImg,@Param("income") Boolean income){
         BSort sort=new BSort(id,uid,sortName,sortImg,null,income);
         int result=bSortService.addSort(sort);
-        if (result==0){
-            return null;
-        }
-        return sort;
+        if (result==0)
+            return (BSort2) new BSort2().fail();
+        return (BSort2) new BSort2(sort).success();
     }
 
     /**
@@ -126,13 +123,13 @@ public class BNoteController {
      */
     @RequestMapping("/pay/add")
     @ResponseBody
-    public BPay addPay(@Param("uid") Integer uid,@Param("payName") String payName,
+    public BPay2 addPay(@Param("uid") Integer uid,@Param("payName") String payName,
                          @Param("payImg") String payImg,@Param("payNum") String payNum){
         BPay pay=new BPay(uid,payName,payImg,payNum);
         int result=bPayService.addPayinfo(pay);
         if (result==0)
-            return null;
-        return pay;
+            return (BPay2) new BPay2().fail();
+        return (BPay2) new BPay2(pay).success();
     }
 
     /**
@@ -146,13 +143,13 @@ public class BNoteController {
      */
     @RequestMapping("/pay/update")
     @ResponseBody
-    public BPay addPay(@Param("id") Integer id,@Param("uid") Integer uid,@Param("payName") String payName,
-                       @Param("payImg") String payImg,@Param("payNum") String payNum){
+    public BPay2 addPay(@Param("id") Integer id, @Param("uid") Integer uid, @Param("payName") String payName,
+                        @Param("payImg") String payImg, @Param("payNum") String payNum){
         BPay pay=new BPay(id,uid,payName,payImg,payNum);
         int result=bPayService.addPayinfo(pay);
         if (result==0)
-            return null;
-        return pay;
+            return (BPay2) new BPay2().fail();
+        return (BPay2) new BPay2(pay).success();
     }
 
 }

@@ -1,6 +1,5 @@
 package com.copasso.billbook.controller;
 
-import com.copasso.billbook.bean.BMessage;
 import com.copasso.billbook.bean.BUser;
 import com.copasso.billbook.service.BUserService;
 import com.copasso.billbook.utils.MDUtils;
@@ -97,7 +96,7 @@ public class BUserController {
         //用户名不存在
         if (user==null){
             user=new BUser();
-            user.fail("用户名不存在");
+            user.setFail("用户名不存在");
             return user;
         }
         //清除密码
@@ -113,7 +112,7 @@ public class BUserController {
                     "您正在通过注册邮箱修改密码（如非本人操作，请忽略此次操作），验证码是："+code);
             user.setSuccess();
         }else{
-            user.fail("用户名与注册邮箱不匹配");
+            user.setFail("用户名与注册邮箱不匹配");
         }
         return user;
     }
@@ -146,7 +145,7 @@ public class BUserController {
         //用户名不存在
         if (user==null){
             user=new BUser();
-            user.fail("用户名不存在");
+            user.setFail("用户名不存在");
             return user;
         }
         //清除密码
@@ -162,7 +161,7 @@ public class BUserController {
             bUserService.updateUser(user);
             user.setSuccess();
         }else{
-            user.fail("验证码不正确");
+            user.setFail("验证码不正确");
         }
         return user;
     }
@@ -186,11 +185,11 @@ public class BUserController {
      * @param id
      * @return
      */
-    @RequestMapping("id/{id}")
-    @ResponseBody
-    public BMessage lookupUserById(@PathVariable("id")Integer id ){
-        return BMessage.success().add("user",bUserService.findUserById(id));
-    }
+//    @RequestMapping("id/{id}")
+//    @ResponseBody
+//    public BMessage lookupUserById(@PathVariable("id")Integer id ){
+//        return BMessage.success().add("user",bUserService.findUserById(id));
+//    }
 
     /**
      * 根据name查询用户

@@ -1,6 +1,7 @@
 package com.copasso.billbook.controller;
 
 import com.copasso.billbook.bean.BUser;
+import com.copasso.billbook.bean.BaseBean;
 import com.copasso.billbook.service.BUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -39,9 +40,9 @@ public class FileController {
      */
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     @ResponseBody
-    public String upload(@RequestParam("file") MultipartFile file) throws IOException {
+    public BaseBean upload(@RequestParam("file") MultipartFile file) throws IOException {
         if (file.isEmpty())
-            return "fail";
+            return new BaseBean().fail();
         String path = request.getSession().getServletContext().getRealPath("upload");
         String fileName = file.getOriginalFilename();
         int id=Integer.parseInt(fileName.split("_")[0]);
@@ -57,6 +58,6 @@ public class FileController {
         user.setImage(fileName);
         bUserService.updateUser(user);
 
-        return "ok";
+        return new BaseBean().success();
     }
 }

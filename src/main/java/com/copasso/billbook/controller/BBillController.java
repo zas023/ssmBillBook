@@ -44,15 +44,16 @@ public class BBillController {
      */
     @RequestMapping("add")
     @ResponseBody
-    public BBill addBill(@Param("cost") Float cost, @Param("content") String content,
+    public BaseBean addBill(@Param("cost") Float cost, @Param("content") String content,
                        @Param("userid") int userid, @Param("sortid") int sortid, @Param("payid") int payid,
                        @Param("crdate") String crdate, @Param("income") boolean income) {
 
         BBill bBill = new BBill(cost, content, userid, sortid, payid, DateUtils.strToDate(crdate), income);
-        int result = bBillService.insertBill(bBill);
-        if (result == 0)
-            return null;
-        return bBill;
+        bBillService.insertBill(bBill);
+        System.out.println(bBill.getId());
+        if (bBill.getId() == null)
+            return new BaseBean().fail();
+        return new BaseBean().success();
     }
 
     /**
@@ -70,7 +71,7 @@ public class BBillController {
      */
     @RequestMapping("update")
     @ResponseBody
-    public BBill upadteBill(@Param("id")int id, @Param("cost") Float cost, @Param("content") String content,
+    public BaseBean upadteBill(@Param("id")int id, @Param("cost") Float cost, @Param("content") String content,
                          @Param("userid") int userid, @Param("sortid") int sortid, @Param("payid") int payid,
                          @Param("crdate") String crdate, @Param("income") boolean income) {
 
@@ -78,8 +79,8 @@ public class BBillController {
         bBill.setId(id);
         int result = bBillService.updateBill(bBill);
         if (result == 0)
-            return null;
-        return bBill;
+            return new BaseBean().fail();
+        return new BaseBean().success();
     }
 
     /**
@@ -92,11 +93,9 @@ public class BBillController {
     @ResponseBody
     public BaseBean removeById(@PathVariable("id") Integer id) {
         BBill bBill = bBillService.findBillById(id);
-        BaseBean baseBean = new BaseBean();
-        baseBean.setFail();
-        if (bBillService.deleteBill(id) != 0)
-            baseBean.setSuccess();
-        return baseBean;
+        if (bBillService.deleteBill(id) == 0)
+            return new BaseBean().fail();
+        return new BaseBean().success();
     }
 
     /**
