@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50719
 File Encoding         : 65001
 
-Date: 2017-12-25 19:33:06
+Date: 2018-03-20 15:25:50
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -18,18 +18,18 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 -- Table structure for bb_bill
 -- ----------------------------
-DROP TABLE IF EXISTS `bb_bill`;            #账单表
+DROP TABLE IF EXISTS `bb_bill`;
 CREATE TABLE `bb_bill` (
-  `id` int(8) NOT NULL AUTO_INCREMENT,     #账单id
-  `cost` float(10,2) NOT NULL,             #账单金额
-  `content` varchar(255) DEFAULT NULL,     #账单备注
-  `userId` int(8) NOT NULL,                #账单创建者id
-  `payId` int(8) DEFAULT NULL,             #账单支付方式id
-  `sortId` int(8) NOT NULL,                #账单所属分类id
-  `crDate` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,  #账单创建时间
-  `income` tinyint(1) NOT NULL DEFAULT '1',  #账单类型，1（true）：支出，0（false）：收入
+  `id` int(8) NOT NULL AUTO_INCREMENT,
+  `cost` float(10,2) NOT NULL,
+  `content` varchar(255) DEFAULT NULL,
+  `userId` int(8) NOT NULL,
+  `payId` int(8) DEFAULT NULL,
+  `sortId` int(8) NOT NULL,
+  `crDate` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `income` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
-  KEY `fk_bill_user` (`userId`),           #外键
+  KEY `fk_bill_user` (`userId`),
   KEY `fk_bill_sort` (`sortId`) USING BTREE,
   KEY `fk_bill_pay` (`payId`),
   CONSTRAINT `fk_bill_pay` FOREIGN KEY (`payId`) REFERENCES `bb_pay` (`id`),
@@ -55,13 +55,13 @@ INSERT INTO `bb_bill` VALUES ('75', '100.00', 'test', '1', '5', '40', '2017-12-0
 -- ----------------------------
 -- Table structure for bb_pay
 -- ----------------------------
-DROP TABLE IF EXISTS `bb_pay`;              #支付方式表
+DROP TABLE IF EXISTS `bb_pay`;
 CREATE TABLE `bb_pay` (
-  `id` int(8) NOT NULL AUTO_INCREMENT,      #支付方式id
-  `uid` int(8) DEFAULT NULL,                #所属用户id，0代表系统
-  `pay_name` varchar(32) DEFAULT NULL,      #支付方式名称
-  `pay_img` varchar(255) DEFAULT NULL,      #支付方式图标
-  `pay_num` varchar(32) DEFAULT NULL,       #支付方式备注
+  `id` int(8) NOT NULL AUTO_INCREMENT,
+  `uid` int(8) DEFAULT NULL,
+  `pay_name` varchar(32) DEFAULT NULL,
+  `pay_img` varchar(255) DEFAULT NULL,
+  `pay_num` varchar(32) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
@@ -77,14 +77,14 @@ INSERT INTO `bb_pay` VALUES ('5', '1', '银行卡', 'bank@2x.png', '尾号4563')
 -- ----------------------------
 -- Table structure for bb_sort
 -- ----------------------------
-DROP TABLE IF EXISTS `bb_sort`;              #账单分类表
+DROP TABLE IF EXISTS `bb_sort`;
 CREATE TABLE `bb_sort` (
-  `id` int(8) NOT NULL AUTO_INCREMENT,       #账单分类id
-  `uid` int(8) unsigned zerofill DEFAULT NULL,  #所属用户id,0代表系统
-  `sort_name` varchar(255) DEFAULT NULL,     #账单分类名称
-  `sort_img` varchar(255) DEFAULT NULL,      #账单分类图标
-  `priority` int(3) DEFAULT NULL,            #账单分类优先级
-  `income` tinyint(1) NOT NULL,              #账单分类类型，1（true）：支出，0（false）：收入
+  `id` int(8) NOT NULL AUTO_INCREMENT,
+  `uid` int(8) unsigned zerofill DEFAULT NULL,
+  `sort_name` varchar(255) DEFAULT NULL,
+  `sort_img` varchar(255) DEFAULT NULL,
+  `priority` int(3) DEFAULT NULL,
+  `income` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8;
 
@@ -140,26 +140,27 @@ INSERT INTO `bb_sort` VALUES ('45', '00000000', '添加', 'tianjia@2x.png', null
 -- ----------------------------
 -- Table structure for bb_user
 -- ----------------------------
-DROP TABLE IF EXISTS `bb_user`;                 #用户表
+DROP TABLE IF EXISTS `bb_user`;
 CREATE TABLE `bb_user` (
-  `id` int(8) NOT NULL AUTO_INCREMENT,          #用户id
-  `username` varchar(11) NOT NULL,              #用户名称
-  `password` varchar(32) NOT NULL,              #用户密码（MD5加密）
-  `gender` char(1) DEFAULT NULL,                #用户性别，M:男，F:女
-  `phone` varchar(11) DEFAULT NULL,             #用户电话
-  `mail` varchar(32) DEFAULT NULL,              #用户邮箱
-  `state` int(1) unsigned zerofill DEFAULT '0', #账号状态，1：可用，0：不可用
-  `mailcode` varchar(64) DEFAULT NULL,          #邮箱验证码
-  `phonecode` varchar(6) DEFAULT NULL,          #电话验证码
+  `id` int(8) NOT NULL AUTO_INCREMENT,
+  `username` varchar(11) NOT NULL,
+  `password` varchar(32) NOT NULL,
+  `gender` char(1) DEFAULT NULL,
+  `phone` varchar(11) DEFAULT NULL,
+  `mail` varchar(32) DEFAULT NULL,
+  `state` int(1) unsigned zerofill DEFAULT '0',
+  `mailcode` varchar(64) DEFAULT NULL,
+  `phonecode` varchar(6) DEFAULT NULL,
+  `image` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of bb_user
 -- ----------------------------
-INSERT INTO `bb_user` VALUES ('1', 'admin', '3E3E6B0E5C1C68644FC5CE3CF060211D', 'M', '15922646438', '375027533@qq.com', '0', null, null);
-INSERT INTO `bb_user` VALUES ('7', 'user02', 'C1898DE4A655382952DC4A93688E211D', null, null, '375027533@qq.com', '1', 'ecbd72af2fc24585926627ec71354684c11da4bacde64b9796568ecdd99e79bc', null);
-INSERT INTO `bb_user` VALUES ('8', 'user01', '338CCCC24975FA0F6FF93D2AFA80AFF7', null, null, '375027533@qq.com', '0', 'b77e29beb86c4eb0a5137cd227b86f985af1cdd2106d487588f188544050e91f', null);
-INSERT INTO `bb_user` VALUES ('9', 'admin1', '3E3E6B0E5C1C68644FC5CE3CF060211D', null, null, '375027533@qq.com', '1', '7153b931e95240338c3000cf7a3ce1035ba80eced47f47bfbdc1f61c0df40db5', null);
-INSERT INTO `bb_user` VALUES ('10', 'admin2', '3E3E6B0E5C1C68644FC5CE3CF060211D', null, null, '375027533@qq.com', '0', '639ebd7bf2164c67b4e6168ff3f7f3828a56ca0691194a02b7a5cff61e871ab3', null);
-INSERT INTO `bb_user` VALUES ('11', 'admin3', '3E3E6B0E5C1C68644FC5CE3CF060211D', null, null, '375027533@qq.com', '0', '6d77b7c476be479b890027af2d45a09f1ab6bee475f1419ca9c08e9fb8477fec', null);
+INSERT INTO `bb_user` VALUES ('1', 'admin', '3E3E6B0E5C1C68644FC5CE3CF060211D', 'M', '15922646438', '375027533@qq.com', '0', null, null, null);
+INSERT INTO `bb_user` VALUES ('7', 'user02', 'C1898DE4A655382952DC4A93688E211D', null, null, '375027533@qq.com', '1', 'ecbd72af2fc24585926627ec71354684c11da4bacde64b9796568ecdd99e79bc', null, null);
+INSERT INTO `bb_user` VALUES ('8', 'user01', '338CCCC24975FA0F6FF93D2AFA80AFF7', null, null, '375027533@qq.com', '0', 'b77e29beb86c4eb0a5137cd227b86f985af1cdd2106d487588f188544050e91f', null, null);
+INSERT INTO `bb_user` VALUES ('9', 'admin1', '3E3E6B0E5C1C68644FC5CE3CF060211D', null, null, '375027533@qq.com', '1', '7153b931e95240338c3000cf7a3ce1035ba80eced47f47bfbdc1f61c0df40db5', null, null);
+INSERT INTO `bb_user` VALUES ('10', 'admin2', '3E3E6B0E5C1C68644FC5CE3CF060211D', null, null, '375027533@qq.com', '0', '639ebd7bf2164c67b4e6168ff3f7f3828a56ca0691194a02b7a5cff61e871ab3', null, null);
+INSERT INTO `bb_user` VALUES ('11', 'admin3', '3E3E6B0E5C1C68644FC5CE3CF060211D', null, null, '375027533@qq.com', '0', '6d77b7c476be479b890027af2d45a09f1ab6bee475f1419ca9c08e9fb8477fec', null, null);

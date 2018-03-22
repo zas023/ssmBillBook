@@ -19,13 +19,15 @@ public class BBill {
 
     private Boolean income;
 
+    private Integer version;
+
     private BSort sort;
 
     public BBill(){
         super();
     }
 
-    public BBill(Float cost, String content, Integer userid, Integer sortid,Integer payid,  Date crdate, Boolean income) {
+    public BBill(Float cost, String content, Integer userid, Integer sortid, Integer payid, Date crdate, Boolean income) {
         this.cost = cost;
         this.content = content;
         this.userid = userid;
@@ -33,6 +35,19 @@ public class BBill {
         this.sortid = sortid;
         this.crdate = crdate;
         this.income = income;
+        this.version= 0;
+    }
+
+    public BBill(Float cost, String content, Integer userid, Integer sortid, Integer payid,
+                  Date crdate, Boolean income, Integer version) {
+        this.cost = cost;
+        this.content = content;
+        this.userid = userid;
+        this.payid = payid;
+        this.sortid = sortid;
+        this.crdate = crdate;
+        this.income = income;
+        this.version= version;
     }
 
     public BSort getSort() {
@@ -105,5 +120,13 @@ public class BBill {
 
     public void setIncome(Boolean income) {
         this.income = income;
+    }
+
+    public Integer getVersion() {
+        return version;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
     }
 }

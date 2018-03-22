@@ -2,9 +2,8 @@ package com.copasso.billbook.dao;
 
 import com.copasso.billbook.bean.BBill;
 import com.copasso.billbook.bean.BBillExample;
-import org.apache.ibatis.annotations.Param;
-
 import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 public interface BBillMapper {
     long countByExample(BBillExample example);

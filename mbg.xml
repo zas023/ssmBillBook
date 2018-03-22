@@ -14,7 +14,7 @@
 		<!-- 配置数据库连接 -->
 		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
 			connectionURL="jdbc:mysql://localhost:3306/billbook?useSSL=false" userId="root"
-			password="admin">
+			password="zas19960607zyr">
 		</jdbcConnection>
 
 		<javaTypeResolver>
@@ -41,10 +41,10 @@
 		</javaClientGenerator>
 
 		<!-- 指定每个表的生成策略 -->
-		<!--<table tableName="bb_bill" domainObjectName="BBill"></table>-->
+		<table tableName="bb_bill" domainObjectName="BBill"></table>
 		<!--<table tableName="bb_type" domainObjectName="BType"></table>-->
 		
-		<table tableName="bb_user" domainObjectName="BUser"></table>
+		<!--<table tableName="bb_user" domainObjectName="BUser"></table>-->
 
 	</context>
 </generatorConfiguration>

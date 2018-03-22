@@ -50,7 +50,6 @@ public class BBillController {
 
         BBill bBill = new BBill(cost, content, userid, sortid, payid, DateUtils.strToDate(crdate), income);
         bBillService.insertBill(bBill);
-        System.out.println(bBill.getId());
         if (bBill.getId() == null)
             return new BaseBean().fail();
         return new BaseBean().success();
@@ -73,13 +72,14 @@ public class BBillController {
     @ResponseBody
     public BaseBean upadteBill(@Param("id")int id, @Param("cost") Float cost, @Param("content") String content,
                          @Param("userid") int userid, @Param("sortid") int sortid, @Param("payid") int payid,
-                         @Param("crdate") String crdate, @Param("income") boolean income) {
-
+                         @Param("crdate") String crdate, @Param("income") boolean income, @Param("version") int version) {
+        //实现简单的乐观锁
+        if (version != bBillService.findBillById(id).getVersion())
+            return new BaseBean().fail("请先更新账单");
         BBill bBill = new BBill(cost, content, userid, sortid, payid, DateUtils.strToDate(crdate), income);
         bBill.setId(id);
-        int result = bBillService.updateBill(bBill);
-        if (result == 0)
-            return new BaseBean().fail();
+        bBill.setVersion(version);
+        bBillService.updateBill(bBill);
         return new BaseBean().success();
     }
 
@@ -107,7 +107,8 @@ public class BBillController {
     @RequestMapping("find/{id}")
     @ResponseBody
     public BBill findById(@PathVariable("id") Integer id) {
-        return bBillService.findBillById(id);
+        BBill bill=bBillService.findBillById(id);
+        return bill;
     }
 
 
