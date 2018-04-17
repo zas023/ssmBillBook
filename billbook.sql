@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50719
 File Encoding         : 65001
 
-Date: 2018-03-20 15:25:50
+Date: 2018-03-23 11:12:18
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -28,6 +28,7 @@ CREATE TABLE `bb_bill` (
   `sortId` int(8) NOT NULL,
   `crDate` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `income` tinyint(1) NOT NULL DEFAULT '1',
+  `version` int(2) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `fk_bill_user` (`userId`),
   KEY `fk_bill_sort` (`sortId`) USING BTREE,
@@ -35,22 +36,26 @@ CREATE TABLE `bb_bill` (
   CONSTRAINT `fk_bill_pay` FOREIGN KEY (`payId`) REFERENCES `bb_pay` (`id`),
   CONSTRAINT `fk_bill_sort` FOREIGN KEY (`sortId`) REFERENCES `bb_sort` (`id`),
   CONSTRAINT `fk_bill_user` FOREIGN KEY (`userId`) REFERENCES `bb_user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=76 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=85 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of bb_bill
 -- ----------------------------
-INSERT INTO `bb_bill` VALUES ('2', '100.00', null, '1', '1', '39', '2017-12-06 20:58:27', '1');
-INSERT INTO `bb_bill` VALUES ('4', '100.00', null, '1', '1', '1', '2017-12-05 13:13:23', '0');
-INSERT INTO `bb_bill` VALUES ('5', '100.00', null, '1', '1', '2', '2017-12-06 20:48:08', '0');
-INSERT INTO `bb_bill` VALUES ('57', '50.00', 'null', '1', '1', '1', '2017-12-05 13:13:26', '0');
-INSERT INTO `bb_bill` VALUES ('58', '250.00', 'null', '1', '1', '3', '2017-12-06 20:48:12', '0');
-INSERT INTO `bb_bill` VALUES ('59', '200.00', 'null', '1', '1', '1', '2017-12-05 13:13:27', '0');
-INSERT INTO `bb_bill` VALUES ('71', '100.00', 'test', '1', '1', '41', '2017-12-06 20:58:38', '1');
-INSERT INTO `bb_bill` VALUES ('72', '100.00', 'test', '1', '1', '1', '2017-12-05 13:13:29', '0');
-INSERT INTO `bb_bill` VALUES ('73', '100.00', 'test', '1', '1', '1', '2017-12-05 13:13:32', '0');
-INSERT INTO `bb_bill` VALUES ('74', '100.00', 'test', '1', '5', '41', '2017-12-06 20:58:41', '1');
-INSERT INTO `bb_bill` VALUES ('75', '100.00', 'test', '1', '5', '40', '2017-12-06 20:58:45', '1');
+INSERT INTO `bb_bill` VALUES ('2', '100.00', null, '1', '1', '39', '2017-12-06 20:58:27', '1', '0');
+INSERT INTO `bb_bill` VALUES ('4', '100.00', null, '1', '1', '1', '2017-12-05 13:13:23', '0', '0');
+INSERT INTO `bb_bill` VALUES ('5', '100.00', null, '1', '1', '2', '2017-12-06 20:48:08', '0', '0');
+INSERT INTO `bb_bill` VALUES ('57', '50.00', 'null', '1', '1', '1', '2017-12-05 13:13:26', '0', '0');
+INSERT INTO `bb_bill` VALUES ('58', '250.00', 'null', '1', '1', '3', '2017-12-06 20:48:12', '0', '0');
+INSERT INTO `bb_bill` VALUES ('59', '200.00', 'null', '1', '1', '1', '2017-12-05 13:13:27', '0', '0');
+INSERT INTO `bb_bill` VALUES ('71', '100.00', 'test', '1', '1', '41', '2017-12-06 20:58:38', '1', '0');
+INSERT INTO `bb_bill` VALUES ('72', '100.00', 'test', '1', '1', '1', '2017-12-05 13:13:29', '0', '0');
+INSERT INTO `bb_bill` VALUES ('73', '100.00', 'test', '1', '1', '1', '2017-12-05 13:13:32', '0', '0');
+INSERT INTO `bb_bill` VALUES ('74', '100.00', 'test', '1', '5', '41', '2017-12-06 20:58:41', '1', '0');
+INSERT INTO `bb_bill` VALUES ('75', '100.00', 'test', '1', '5', '40', '2017-12-06 20:58:45', '1', '0');
+INSERT INTO `bb_bill` VALUES ('76', '555.00', 'test', '1', '3', '2', '2017-12-27 20:58:27', '0', '0');
+INSERT INTO `bb_bill` VALUES ('77', '555.00', 'test', '1', '3', '2', '2017-12-27 20:58:27', '0', '0');
+INSERT INTO `bb_bill` VALUES ('78', '555.00', 'test', '1', '3', '2', '2017-12-27 20:58:27', '0', '0');
+INSERT INTO `bb_bill` VALUES ('79', '1.00', 'test', '1', '3', '2', '2017-12-27 20:58:27', '0', '2');
 
 -- ----------------------------
 -- Table structure for bb_pay
@@ -160,7 +165,3 @@ CREATE TABLE `bb_user` (
 -- ----------------------------
 INSERT INTO `bb_user` VALUES ('1', 'admin', '3E3E6B0E5C1C68644FC5CE3CF060211D', 'M', '15922646438', '375027533@qq.com', '0', null, null, null);
 INSERT INTO `bb_user` VALUES ('7', 'user02', 'C1898DE4A655382952DC4A93688E211D', null, null, '375027533@qq.com', '1', 'ecbd72af2fc24585926627ec71354684c11da4bacde64b9796568ecdd99e79bc', null, null);
-INSERT INTO `bb_user` VALUES ('8', 'user01', '338CCCC24975FA0F6FF93D2AFA80AFF7', null, null, '375027533@qq.com', '0', 'b77e29beb86c4eb0a5137cd227b86f985af1cdd2106d487588f188544050e91f', null, null);
-INSERT INTO `bb_user` VALUES ('9', 'admin1', '3E3E6B0E5C1C68644FC5CE3CF060211D', null, null, '375027533@qq.com', '1', '7153b931e95240338c3000cf7a3ce1035ba80eced47f47bfbdc1f61c0df40db5', null, null);
-INSERT INTO `bb_user` VALUES ('10', 'admin2', '3E3E6B0E5C1C68644FC5CE3CF060211D', null, null, '375027533@qq.com', '0', '639ebd7bf2164c67b4e6168ff3f7f3828a56ca0691194a02b7a5cff61e871ab3', null, null);
-INSERT INTO `bb_user` VALUES ('11', 'admin3', '3E3E6B0E5C1C68644FC5CE3CF060211D', null, null, '375027533@qq.com', '0', '6d77b7c476be479b890027af2d45a09f1ab6bee475f1419ca9c08e9fb8477fec', null, null);
